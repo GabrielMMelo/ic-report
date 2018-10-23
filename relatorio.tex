@@ -28,22 +28,22 @@
 % ------------------------------------------------------------------------
 
 \documentclass[
-	% -- opções da classe memoir --
-	12pt,				% tamanho da fonte
-	openany,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
-	twoside,			% para impressão em recto e verso. Oposto a oneside
-	a4paper,			% tamanho do papel. 
-	% -- opções da classe abntex2 --
-	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
-	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
-	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
-	%subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
-	% -- opções do pacote babel --
-	english,			% idioma adicional para hifenização
-	french,				% idioma adicional para hifenização
-	spanish,			% idioma adicional para hifenização
-	brazil,				% o último idioma é o principal do documento
-	]{abntex2}
+% -- opções da classe memoir --
+12pt,				% tamanho da fonte
+openany,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+twoside,			% para impressão em recto e verso. Oposto a oneside
+a4paper,			% tamanho do papel. 
+% -- opções da classe abntex2 --
+%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+%subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
+% -- opções do pacote babel --
+english,			% idioma adicional para hifenização
+french,				% idioma adicional para hifenização
+spanish,			% idioma adicional para hifenização
+brazil,				% o último idioma é o principal do documento
+]{abntex2}
 
 
 % ---
@@ -68,7 +68,7 @@
 \usepackage{multicol}
 \usepackage{multirow}
 % ---
-	
+
 % ---
 % Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
 % ---
@@ -84,13 +84,110 @@
 % ---
 % Pacotes pessoais
 % ---
+
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\definecolor{bege}{rgb}{0.95,0.95,0.9}
+
+\usepackage{caption}
+\captionsetup{lstlisting}{font={small,tt}}
 \usepackage{listings}				% para inclusão de códigos-fonte no documento
+\lstdefinestyle{bash}{ 
+    backgroundcolor=\color{black},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+    basicstyle=\footnotesize\color{white},        % the size of the fonts that are used for the code
+    breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+    breaklines=true,                 % sets automatic line breaking
+    captionpos=b,                    % sets the caption-position to bottom
+    commentstyle=\color{red},    % comment style
+    deletekeywords={...},            % if you want to delete keywords from the given language
+    escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+    extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+    keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+    columns=flexible,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+    keywordstyle=\color{green},       % keyword style
+    language=bash,                  % the language of the code
+    linecolor=\color{black},
+    morekeywords={*,..., sudo, curl},            % if you want to add more keywords to the set
+    numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+    numbersep=5pt,                   % how far the line-numbers are from the code
+    numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+    rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+    showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+    showstringspaces=false,          % underline spaces within strings only
+    showtabs=false,                  % show tabs within strings adding particular underscores
+    stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+    stringstyle=\color{yellow},     % string literal style
+    tabsize=2,                       % sets default tabsize to 2 spaces
+    title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
+\lstdefinestyle{php}{ 
+    backgroundcolor=\color{black},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+    basicstyle=\footnotesize\color{white},        % the size of the fonts that are used for the code
+    breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+    breaklines=true,                 % sets automatic line breaking
+    captionpos=b,                    % sets the caption-position to bottom
+    commentstyle=\color{red},    % comment style
+    deletekeywords={...},            % if you want to delete keywords from the given language
+    escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+    extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+    keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+    columns=flexible,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+    keywordstyle=\color{green},       % keyword style
+    language=php,                  % the language of the code
+    linecolor=\color{black},
+    morekeywords={*,..., class, extends, protected, public, private, function},            % if you want to add more keywords to the set
+    numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+    numbersep=5pt,                   % how far the line-numbers are from the code
+    numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+    rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+    showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+    showstringspaces=false,          % underline spaces within strings only
+    showtabs=false,                  % show tabs within strings adding particular underscores
+    stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+    stringstyle=\color{yellow},     % string literal style
+    tabsize=2,                       % sets default tabsize to 2 spaces
+    title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
+\lstdefinestyle{common}{ 
+    backgroundcolor=\color{bege},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+    basicstyle=\color{black},        % the size of the fonts that are used for the code
+    breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+    breaklines=true,                 % sets automatic line breaking
+    captionpos=b,                    % sets the caption-position to bottom
+    commentstyle=\color{red},    % comment style
+    deletekeywords={...},            % if you want to delete keywords from the given language
+    escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+    extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+    keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+    columns=flexible,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+    keywordstyle=\color{mygreen},       % keyword style
+    language=php,                  % the language of the code
+    linecolor=\color{black},
+    morekeywords={*,..., class, extends, protected, public, private, function},            % if you want to add more keywords to the set
+    numbers=none,                    % where to put the line-numbers; possible values are (none, left, right)
+    numbersep=5pt,                   % how far the line-numbers are from the code
+    numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+    rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+    showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+    showstringspaces=false,          % underline spaces within strings only
+    showtabs=false,                  % show tabs within strings adding particular underscores
+    stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+    stringstyle=\color{blue},     % string literal style
+    tabsize=2,                       % sets default tabsize to 2 spaces
+    title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
 % ---
 
 % --- 
 % CONFIGURAÇÕES DE PACOTES
 % --- 
-
+\renewcommand{\labelitemi}{}
 % ---
 % Configurações do pacote backref
 % Usado sem a opção hyperpageref de backref
@@ -99,13 +196,13 @@
 \renewcommand{\backref}{}
 % Define os textos da citação
 \renewcommand*{\backrefalt}[4]{
-	\ifcase #1 %
-		Nenhuma citação no texto.%
-	\or
-		Citado na página #2.%
-	\else
-		Citado #1 vezes nas páginas #2.%
-	\fi}%
+    \ifcase #1 %
+        Nenhuma citação no texto.%
+        \or
+        Citado na página #2.%
+    \else
+        Citado #1 vezes nas páginas #2.%
+\fi}%
 % ---
 
 % ---
@@ -116,11 +213,11 @@
 \local{Brasil}
 \data{2018}
 \instituicao{%
-  Universidade Federal de Lavras
-  \par
-  Departamento de Engenharia
-  \par
-  Graduação em Ciência da Computação}
+    Universidade Federal de Lavras
+    \par
+    Departamento de Engenharia
+    \par
+Graduação em Ciência da Computação}
 
 \tipotrabalho{Relatório técnico}
 % O preambulo deve conter o tipo do trabalho, o objetivo, 
@@ -137,18 +234,18 @@
 % informações do PDF
 \makeatletter
 \hypersetup{
-     	%pagebackref=true,
-		pdftitle={\@title}, 
-		pdfauthor={\@author},
-    	pdfsubject={\imprimirpreambulo},
-	    pdfcreator={LaTeX with abnTeX2},
-		pdfkeywords={abnt}{latex}{abntex}{abntex2}{relatório técnico}, 
-		colorlinks=true,       		% false: boxed links; true: colored links
-    	linkcolor=blue,          	% color of internal links
-    	citecolor=blue,        		% color of links to bibliography
-    	filecolor=magenta,      		% color of file links
-		urlcolor=blue,
-		bookmarksdepth=4
+    %pagebackref=true,
+    pdftitle={\@title}, 
+    pdfauthor={\@author},
+    pdfsubject={\imprimirpreambulo},
+    pdfcreator={LaTeX with abnTeX2},
+    pdfkeywords={abnt}{latex}{abntex}{abntex2}{relatório técnico}, 
+    colorlinks=true,       		% false: boxed links; true: colored links
+    linkcolor=blue,          	% color of internal links
+    citecolor=blue,        		% color of links to bibliography
+    filecolor=magenta,      		% color of file links
+    urlcolor=blue,
+    bookmarksdepth=4
 }
 \makeatother
 % --- 
@@ -200,65 +297,65 @@
 % ---
 
 \iffalse
-% ---
-% Anverso da folha de rosto:
-% ---
+    % ---
+    % Anverso da folha de rosto:
+    % ---
 
-{
-\ABNTEXchapterfont
+    {
+        \ABNTEXchapterfont
 
-\vspace*{\fill}
+        \vspace*{\fill}
 
-Conforme a ABNT NBR 10719:2015, seção 4.2.1.1.1, o anverso da folha de rosto
-deve conter:
+        Conforme a ABNT NBR 10719:2015, seção 4.2.1.1.1, o anverso da folha de rosto
+        deve conter:
 
-\begin{alineas}
-  \item nome do órgão ou entidade responsável que solicitou ou gerou o
-   relatório; 
-  \item título do projeto, programa ou plano que o relatório está relacionado;
-  \item título do relatório;
-  \item subtítulo, se houver, deve ser precedido de dois pontos, evidenciando a
-   sua subordinação ao título. O relatório em vários volumes deve ter um título
-   geral. Além deste, cada volume pode ter um título específico; 
-  \item número do volume, se houver mais de um, deve constar em cada folha de
-   rosto a especificação do respectivo volume, em algarismo arábico; 
-  \item código de identificação, se houver, recomenda-se que seja formado
-   pela sigla da instituição, indicação da categoria do relatório, data,
-   indicação do assunto e número sequencial do relatório na série; 
-  \item classificação de segurança. Todos os órgãos, privados ou públicos, que
-   desenvolvam pesquisa de interesse nacional de conteúdo sigiloso, devem
-    informar a classificação adequada, conforme a legislação em vigor; 
-  \item nome do autor ou autor-entidade. O título e a qualificação ou a função
-   do autor podem ser incluídos, pois servem para indicar sua autoridade no
-   assunto. Caso a instituição que solicitou o relatório seja a mesma que o
-   gerou, suprime-se o nome da instituição no campo de autoria; 
-  \item local (cidade) da instituição responsável e/ou solicitante; NOTA: No
-   caso de cidades homônimas, recomenda-se o acréscimo da sigla da unidade da
-   federação.
-  \item ano de publicação, de acordo com o calendário universal (gregoriano),
-  deve ser apresentado em algarismos arábicos.
-\end{alineas}
+        \begin{alineas}
+        \item nome do órgão ou entidade responsável que solicitou ou gerou o
+            relatório; 
+        \item título do projeto, programa ou plano que o relatório está relacionado;
+        \item título do relatório;
+        \item subtítulo, se houver, deve ser precedido de dois pontos, evidenciando a
+            sua subordinação ao título. O relatório em vários volumes deve ter um título
+            geral. Além deste, cada volume pode ter um título específico; 
+        \item número do volume, se houver mais de um, deve constar em cada folha de
+            rosto a especificação do respectivo volume, em algarismo arábico; 
+        \item código de identificação, se houver, recomenda-se que seja formado
+            pela sigla da instituição, indicação da categoria do relatório, data,
+            indicação do assunto e número sequencial do relatório na série; 
+        \item classificação de segurança. Todos os órgãos, privados ou públicos, que
+            desenvolvam pesquisa de interesse nacional de conteúdo sigiloso, devem
+            informar a classificação adequada, conforme a legislação em vigor; 
+        \item nome do autor ou autor-entidade. O título e a qualificação ou a função
+            do autor podem ser incluídos, pois servem para indicar sua autoridade no
+            assunto. Caso a instituição que solicitou o relatório seja a mesma que o
+            gerou, suprime-se o nome da instituição no campo de autoria; 
+        \item local (cidade) da instituição responsável e/ou solicitante; NOTA: No
+            caso de cidades homônimas, recomenda-se o acréscimo da sigla da unidade da
+            federação.
+        \item ano de publicação, de acordo com o calendário universal (gregoriano),
+            deve ser apresentado em algarismos arábicos.
+        \end{alineas}
 
-\vspace*{\fill}
-}
+        \vspace*{\fill}
+    }
 
-% ---
-% Agradecimentos
-% ---
-\begin{agradecimentos}
-O agradecimento principal é direcionado a Youssef Cherem, autor do
-\nameref{formulado-identificacao} (\autopageref{formulado-identificacao}).
+    % ---
+    % Agradecimentos
+    % ---
+    \begin{agradecimentos}
+        O agradecimento principal é direcionado a Youssef Cherem, autor do
+        \nameref{formulado-identificacao} (\autopageref{formulado-identificacao}).
 
-Os agradecimentos especiais são direcionados ao Centro de Pesquisa em
-Arquitetura da Informação\footnote{\url{http://www.cpai.unb.br/}} da Universidade de
-Brasília (CPAI), ao grupo de usuários
-\emph{latex-br}\footnote{\url{http://groups.google.com/group/latex-br}} e aos
-novos voluntários do grupo
-\emph{\abnTeX}\footnote{\url{http://groups.google.com/group/abntex2} e
-\url{http://www.abntex.net.br/}}~que contribuíram e que ainda
-contribuirão para a evolução do abn\TeX.
+        Os agradecimentos especiais são direcionados ao Centro de Pesquisa em
+        Arquitetura da Informação\footnote{\url{http://www.cpai.unb.br/}} da Universidade de
+        Brasília (CPAI), ao grupo de usuários
+        \emph{latex-br}\footnote{\url{http://groups.google.com/group/latex-br}} e aos
+        novos voluntários do grupo
+        \emph{\abnTeX}\footnote{\url{http://groups.google.com/group/abntex2} e
+        \url{http://www.abntex.net.br/}}~que contribuíram e que ainda
+        contribuirão para a evolução do abn\TeX.
 
-\end{agradecimentos}
+    \end{agradecimentos}
 \fi
 % ---
 
@@ -270,30 +367,30 @@ contribuirão para a evolução do abn\TeX.
 \setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
 \begin{resumo}
 
-O aprimoramento das comunicações sem fio e o custo cada vez menor de
-dispositivos que se comunicam desta forma, impulsionaram o movimento da
-Internet das coisas bem como as técnicas de acesso remoto via Internet. Neste
-cenário, a domótica, que oferece praticidade, conforto e segurança aos lares,
-ganhou popularidade e foco de pesquisas e projetos. Residências
-automatizadas fornecem controle remoto de dispositivos, como lâmpadas,
-climatizadores e portas, além de informações de monitoramento do lar por
-sensores e câmeras. Nosso projeto, de finalidade aplicada, tem como objetivo
-geral discutir e criar um sistema de controle de automação residencial seguro,
-por acesso remoto via internet, com quantidade de nós atuadores escalável e
-de custo reduzido. A análise quantitativa da escalabilidade e desempenho dos
-nós fornece um parâmetro de comparação em relação às outras modelagens
-empregadas para o problema. Como protótipo, foi desenvolvido um servidor
-web HTTP, para acesso do usuário, utilizando um Raspberry Pi Model B, com
-imagem ubuntu 16.04.1, implementado na linguagem de programação PHP
-7.0.3 e o framework web Laravel 5.5.40. Os nós foram projetados em uma
-placa de circuito impresso que tem como controlador um esp8266-01 e alguns
-atuadores e sensores genéricos. Além da escalabilidade dos nós, estes
-estabelecem uma conexão bidirecional por Web Socket com um servidor em
-Node.js integrado ao mesmo servidor web, comunicando com o sistema em
-tempo real.
+    O aprimoramento das comunicações sem fio e o custo cada vez menor de
+    dispositivos que se comunicam desta forma, impulsionaram o movimento da
+    Internet das coisas bem como as técnicas de acesso remoto via Internet. Neste
+    cenário, a domótica, que oferece praticidade, conforto e segurança aos lares,
+    ganhou popularidade e foco de pesquisas e projetos. Residências
+    automatizadas fornecem controle remoto de dispositivos, como lâmpadas,
+    climatizadores e portas, além de informações de monitoramento do lar por
+    sensores e câmeras. Nosso projeto, de finalidade aplicada, tem como objetivo
+    geral discutir e criar um sistema de controle de automação residencial seguro,
+    por acesso remoto via internet, com quantidade de nós atuadores escalável e
+    de custo reduzido. A análise quantitativa da escalabilidade e desempenho dos
+    nós fornece um parâmetro de comparação em relação às outras modelagens
+    empregadas para o problema. Como protótipo, foi desenvolvido um servidor
+    web HTTP, para acesso do usuário, utilizando um Raspberry Pi Model B, com
+    imagem ubuntu 16.04.1, implementado na linguagem de programação PHP
+    7.0.3 e o framework web Laravel 5.5.40. Os nós foram projetados em uma
+    placa de circuito impresso que tem como controlador um esp8266-01 e alguns
+    atuadores e sensores genéricos. Além da escalabilidade dos nós, estes
+    estabelecem uma conexão bidirecional por Web Socket com um servidor em
+    Node.js integrado ao mesmo servidor web, comunicando com o sistema em
+    tempo real.
 
- \noindent
- \textbf{Palavras-chaves}: domótica. acesso remoto. servidor web.
+    \noindent
+    \textbf{Palavras-chaves}: domótica. acesso remoto. servidor web.
 \end{resumo}
 % ---
 
@@ -314,11 +411,19 @@ tempo real.
 % ---
 
 % ---
+% inserir lista de tabelas
+% ---
+\pdfbookmark[0]{\listlistings}{lot}
+\lstlistoflistings
+\cleardoublepage
+% ---
+
+% ---
 % inserir lista de abreviaturas e siglas
 % ---
 \begin{siglas}
-  \item[ABNT] Associação Brasileira de Normas Técnicas
-  \item[abnTeX] ABsurdas Normas para TeX
+\item[ABNT] Associação Brasileira de Normas Técnicas
+\item[abnTeX] ABsurdas Normas para TeX
 \end{siglas}
 % ---
 
@@ -326,10 +431,10 @@ tempo real.
 % inserir lista de símbolos
 % ---
 \begin{simbolos}
-  \item[$ \Gamma $] Letra grega Gama
-  \item[$ \Lambda $] Lambda
-  \item[$ \zeta $] Letra grega minúscula zeta
-  \item[$ \in $] Pertence
+\item[$ \Gamma $] Letra grega Gama
+\item[$ \Lambda $] Lambda
+\item[$ \zeta $] Letra grega minúscula zeta
+\item[$ \in $] Pertence
 \end{simbolos}
 % ---
 
@@ -374,8 +479,8 @@ Este documento foi redigido em \LaTeX usando o pacote \textit{abnTeX2}.
 \section{Placas fotovoltaicas}
 
 \begin{figure}[ht!]
-  \includegraphics[width=450pt]{images/circuit.png}
-  \caption{Foto do protótipo montado}
+    \includegraphics[width=450pt]{images/circuit.png}
+    \caption{Foto do protótipo montado}
 \end{figure}
 
 \chapter{Esp8266}
@@ -390,19 +495,19 @@ porém o ESP8266 conta com upload OTA (over-the-air), que é a gravação atrav�
 Seguir pontos do curso
 \section{Especificações}
 
-  \begin{table}[ ]
-        \begin{tabular}{|l|l|l|}
-                \hline
+\begin{table}[ ]
+    \begin{tabular}{|l|l|l|}
+        \hline
                      & ESP-12           & ATMEGA-328p     \\ \hline
-                      Arquitetura                                                      & 32-bits          & 8-bits          \\ \hline
-                     Frequência                                                       & 80 $\sim$160 MHz & 16 $\sim$20 MHz \\ \hline
-                    \begin{tabular}[c]{@{}l@{}}Tensão \\ \\ de operação\end{tabular} & 2.5 $\sim$3.6V   & 1.8 $\sim$5.5V  \\ \hline
-                     \begin{tabular}[c]{@{}l@{}}Memória \\ \\ Flash\end{tabular}      & 1Mb $\sim$4Mb    & 32Kb            \\ \hline
-                    \begin{tabular}[c]{@{}l@{}}Memória \\ \\ RAM\end{tabular}      & 15 $\sim$26Kb*    & 2Kb            \\ \hline
-                   GPIOS                                                            & 18 (17/d e 1/a)  & 20 (14/d e 6/a) \\ \hline
-                  Preço                                                            & \$8,79           & \$9,99          \\ \hline
-        \end{tabular}
-        \caption{Especificações ESP8266 vs ATMEGA-328p}
+        Arquitetura                                                      & 32-bits          & 8-bits          \\ \hline
+        Frequência                                                       & 80 $\sim$160 MHz & 16 $\sim$20 MHz \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Tensão \\ \\ de operação\end{tabular} & 2.5 $\sim$3.6V   & 1.8 $\sim$5.5V  \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Memória \\ \\ Flash\end{tabular}      & 1Mb $\sim$4Mb    & 32Kb            \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Memória \\ \\ RAM\end{tabular}      & 15 $\sim$26Kb*    & 2Kb            \\ \hline
+        GPIOS                                                            & 18 (17/d e 1/a)  & 20 (14/d e 6/a) \\ \hline
+        Preço                                                            & \$8,79           & \$9,99          \\ \hline
+    \end{tabular}
+    \caption{Especificações ESP8266 vs ATMEGA-328p}
 \end{table}
 
 
@@ -413,8 +518,310 @@ Seguir pontos do curso
 \section{Linux}
 
 \section{Web server}
-\subsection{Laravel}
+\chapter{Laravel}
+\section{Introdução}
+O Laravel é um framework web PHP, baseado na arquitetura MVC, que busca agilizar e
+facilitar a criação de aplicações, evitando a codificação repetitiva e prezando por boas práticas
+e seguindo padrões de design. Seus diferenciais estão na intuitividade da sua estrutura de
+arquivos e diretórios, na sua rica documentação e, principalmente, na sua grande e
+participativa comunidade – não me deparei com nenhuma dúvida em que já não existisse um
+tópico respondido nos Laracasts 1 ou mesmo no professor Stack overflow.
+A ideia deste documento é introduzir, superficialmente, os aspectos e funcionamentos do
+framework, bem como conduzir os leitores à demais documentos e referências.
+\subsection{MVC (model-view-controller)}
+O MVC é um padrão de arquitetura de software que tem como objetivo isolar a
+representação da informação da interação do usuário.
+
+\subsubsection{Model}
+As models são classes que modelam uma entidade e a torna acessível para a aplicação de
+uma forma dinâmica. Podemos dizer que são usadas como uma interface entre o banco de
+dados e a aplicação.
+\subsubsection{View}
+As views são representações - visuais - dos dados de uma aplicação, voltados para um ou
+mais usuários.
+\subsubsection{Controller}
+Geralmente, os componentes mais complexos, em termos de codificação, em uma aplicação
+de arquitetura MVC são os controladores\footnote{ Na verdade, uma boa prática de desenvolvimento é utilizar os controladores como responsáveis
+    apenas das requisições HTTP, uma vez que existem outras maneiras de uma aplicação receber
+solicitações, como cren jobs, queue jobs, etc.}. Estes componentes são classes que organizam a
+logica de uma ou mais rotas. As rotas encaminham a aplicação para o controlador, que, por
+sua vez, computa as operações necessárias à lógica da aplicação, podendo acessar as models
+para obter dados persistentes, e direciona uma view, passando os parâmetros necessários
+para sua renderização.
+
+\section{Preparação do ambiente}
+\subsection{Linux}
+
+\begin{lstlisting}[style=bash,caption={Instalando Apache e PHP 7.2}]
+    sudo add-apt-repository ppa:ondrej/php
+    sudo apt-get update
+    sudo apt-get install apache2 libapache2-mod-php7.2 php7.2 \
+                         php7.2-xml php7.2-gd php7.2-opcache php7.2-mbstring
+\end{lstlisting}
+
+
+\begin{lstlisting}[style=bash,caption={Instalando o Composer (gerenciador de pacotes PHP)}]
+    cd /tmp
+    curl -sS https://getcomposer.org/installer | php
+    sudo mv composer.phar /usr/local/bin/composer
+\end{lstlisting}
+
+\begin{lstlisting}[style=bash,caption={Criando novo projeto Laravel}]
+    composer create-project --prefer-dist laravel/laravel Nome_Projeto
+\end{lstlisting}
+
+\begin{lstlisting}[style=bash,caption={Permissões de acesso no apache}]
+    sudo chgrp -R www-data /var/www/html/Nome-projeto
+    sudo chmod -R 775 /var/www/html/Nome-projeto/storage
+\end{lstlisting}
+
+\begin{lstlisting}[style=bash,caption={Arquivo de configuração do projeto}]
+    cd /etc/apache2/sites-available
+    sudo nano laravel.conf
+\end{lstlisting}
+
+\begin{lstlisting}[style=bash,caption={\textit{laravel.conf}}]
+    <VirtualHost *:80>
+        ServerName seuDominio.app
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html/Nome-projeto/public
+
+        <Directory /var/www/html/Nome-projeto>
+            AllowOverride All
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>
+\end{lstlisting}
+
+\begin{lstlisting}[style=bash,caption={Desabilitando virtualhost padrão e habilitando o novo}]
+    sudo a2dissite 000-default.conf
+    sudo a2ensite laravel.conf
+    sudo service apache2 reload
+\end{lstlisting}
+
+\section{Configurações iniciais do projeto}
+
+\subsection{Chave de aplicação}
+
+\begin{lstlisting}[style=bash,caption={Gerando chave de aplicação}]
+    php artisan key:generate
+\end{lstlisting}
+
+\begin{leftbar}
+    Se a chave \textbf{não é declarada,} suas sessões de usuário e outros dados criptografados \textbf{não estarão seguros!}
+\end{leftbar}
+
+\subsection{Banco de dados}
+As configurações do banco de dados são feitas no arquivo config/database.php . O
+arquivo faz referências a variáveis de ambiente da aplicação, definidas no arquivo oculto /.env.
+
+\section{Estrutura do projeto}
+
+\subsection{Diretórios}
+Todos projetos Laravel possuem a mesma estrutura de diretórios padrão:
+
+\begin{itemize}
+    \item /app $\rightarrow$ Maior parte do aplicativo. Contém os models, controllers, definições de rota, comandos e código de domínio PHP;
+
+    \item /bootstrap $\rightarrow$ Contém os arquivos usados na inicialização do Laravel;
+
+    \item /config $\rightarrow$ Contém os arquivos de configuração da aplicação;
+
+    \item /database $\rightarrow$ Contém as migrations (operações nas models) e seeds;
+
+    \item /public $\rightarrow$ É o diretório que o servidor aponta. Contém o index.php, que é o controlador frontal que inicia o processo de bootstrapping e roteia as solicitações adequadamente. Contém arquivos voltados ao cliente, como imagens, css, scripts ou downloads;
+        
+    \item /resources $\rightarrow$ Contém arquivos não PHP necessários para a realização de outros scripts. Views e arquivos opcionais, como Sass/Less e javascript;
+
+    \item /routes $\rightarrow$ Contém as definições de rotas. Tanto para rotas HTTP, quanto para "rotas de console", por exemplo, o comando artisan;
+
+    \item /storage $\rightarrow$ Contém cache, logs e arquivos compilados;
+
+    \item /tests $\rightarrow$ Contém testes de unidade e integração;
+
+    \item /vendor $\rightarrow$ É onde o composer instala suas dependências. É, por padrão, incluída no .gitignore.
+\end{itemize}
+
+\subsection{Arquivos 'soltos'}
+
+\begin{itemize}
+    \item .env $\rightarrow$ Possui as variáveis de ambiente (informações da aplicação, banco de dados, broadcast, session, queue, smtp). É, por padrão, incluído no .gitignore. Suas variáveis são acessadas internamente na aplicação pelo helper env();
+
+    \item .env.example $\rightarrow$ Arquivo padrão que serve como base para montagem do seu .env;
+
+    \item package.json $\rightarrow$ Arquivo que lista os pacotes javascript a serem instalados na aplicação ao executar npm install na raiz do projeto.
+
+\end{itemize}
+
+
+\section{Banco de Dados}
+O Laravel possibilita o usuário a criar, consultar e manipular banco de dados de forma ágil e fácil.
+
+\subsection{Models}
+As models são classes que modelam uma entidade e a torna acessível para a aplicação de
+uma forma dinâmica. Podemos dizer que são usadas como uma interface entre o banco de
+dados e a aplicação.
+
+O seguinte comando, executado na raiz do projeto, criará uma model de nome nome\_model
+em App/nome\_model.php.
+
+\begin{lstlisting}[style=bash,caption={Criando uma model}]
+    php artisan make:model nome_model
+\end{lstlisting}
+
+
+Acesse-o e realize as modificações conforme os campos de sua entidade. Os atributos
+definidos no campo \textbf{\$fillable}, serão de atribuição em massa, ou seja, não existirá
+proteção no caso de um usuário passar um parâmetro inesperado por uma requisição HTTP
+que alterará uma coluna no banco de dados, por exemplo. Para contornar isso, existe o
+campo \textbf{\$guarded} que garante que seus atributos sejam protegidos quanto a atribuição em
+massa. Por default, todos modelos Eloquent são protegidos.
+
+O campo \textbf{\$table} definirá o nome da model. Por default, assume o plural (em inglês) do
+nome do nome da classe.
+
+Exemplo abaixo:
+
+\begin{lstlisting}[style=php,caption={\textit{app/Pessoa.php}}]
+    class Pessoa extends Model
+    {
+        protected $fillable = [
+            'nome',
+            'cpf'
+        ];
+        protected $table = 'Pessoas';
+    }
+\end{lstlisting}
+
+\begin{leftbar}
+    Deve ser usado \textbf{\$fillable} ou \textbf{\$guarded }- não os dois. Todos não assinalados como \textbf{\$fillable} serão \textbf{\$guarded} e vice-versa.
+\end{leftbar}
+
+\subsection{Migrations}
+Uma migration é resonsável por modelar, criar e deletar um banco de dados referente a uma model.
+
+O exemplo abaixo criará um arquivo default de migration em \textit{/database/migrations}.
+
+\begin{lstlisting}[style=bash,caption={Criando uma migration}]
+    php artisan make:migration nome_migration --create nome_model
+\end{lstlisting}
+
+
+\begin{lstlisting}[style=php,caption={Arquivo de migration exemplo}]
+    public function up()
+    {
+        Schema::create('_log', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('MAC');
+            $table->string('status');
+            $table->string('error');
+            $table->string('time');
+            $table->timestamps();
+        });
+    }
+\end{lstlisting}
+
+Os campos \textbf{timestamps()} e \textbf{increments()} são padrões em Laravel.
+
+Os campos comuns de Blueprint estão listados no apêndice I.
+
+\begin{leftbar}
+    O construtor dde esquemas do Laravel permite apenas comandos do padrão \textbf{ANSI SQL}. Para executar demais comandos, use \textit{DB::statement()}.
+\end{leftbar}
+
+O comando abaixo executa as migrações pendentes, criando, editando ou dropando as tabelas no banco de dados configurado em \textit{.end/}.
+
+\begin{lstlisting}[style=bash,caption={Executando uma migração}]
+    php artisan migrate
+\end{lstlisting}
+
+Demais opções de comandos de migração estão no apêndiace II.
+
+\begin{leftbar}
+    Não delete uma migration sem antes executar \textit{php artisan migrate:reset}. Caso contrário, ocorrerá inconsistência em seu banco de dados!
+\end{leftbar}
+
+\subsection{Relacionamentos entre Models}
+Podemos facilmente relacionar duas models através de uma \textbf{FOREIGN KEY} em Laravel.
+
+Suponha uma nova model \textbf{Telefone} que terá um relacionamento muitos-para-um com
+\textbf{Pessoa}. Uma pessoa pode conter vários telefones, mas cada telefone pertence a somente
+uma pessoa.
+
+
+\begin{lstlisting}[style=php,caption={\textit{Arquivo de migration exemplo 2}}]
+    public function up() {
+        Schema::create('Telefones', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('DDD');
+            $table->string('numero');
+            $table->integer('id_pessoa')->unsigned();
+            $table->foreign('id_pessoa')->references('id')->on('Pessoas')->onDelete('cascade');
+            $table->timestamps();
+        });
+    }
+\end{lstlisting}
+
+\begin{leftbar}
+    Tenha certeza de que os tipos da foreign key e a referência \textbf{são iguais}. Certifique, também que a referência é uma \textit{primary key}.
+\end{leftbar}
+
+Criada a model e sua migration, podemos editar a classe \textbf{Pessoa p}ara acessarmos os telefones referentes a cada instância:
+
+\begin{lstlisting}[style=php,caption={\textit{app/Pessoa.php}}]
+    public function telefone() 
+    {
+        return $this->hasMany(Telefone::class, 'id_pessoa');
+    }
+\end{lstlisting}
+
+O mesmo pode ser feito na classe \textbf{Telefone} para acessar os dados do dono do telefone:
+
+\begin{lstlisting}[style=php,caption={\textit{app/Telefone.php}}]
+    public function pessoa() 
+    {
+        return $this->belongsTo(Pessoa::class, 'id_pessoa');
+    }
+\end{lstlisting}
+
+\section{Templates com Blade}
+
+Inspirado na \textbf{Razor} da plataforma .NET, o \textbf{Blade} é a elegante -e limpa- engine de templates
+do Laravel. O componente fornece rapidez em atividades corriqueiras e também acessibilidade e facilidade em requisitos complexos, como herança aninhada e recursão.
+
+\subsection{Ecoando dados}
+
+As chaves duplas \textbf{\{\{} e \textbf{\}\}} são usadas para delimitar as seções de PHP que serão ecoadas.
+
+\begin{lstlisting}[style=common,caption={Ecoando uma variável}]
+    {{ %*\textbf{\$variavel}*) }}
+\end{lstlisting}
+
+É o equivalente a:
+
+\begin{lstlisting}[style=common,caption={Ecoando uma variável em PHP puro}]
+    <?php htmlentities(%*\textbf{\$variavel}*)) ?> 
+\end{lstlisting}
+
+\subsection{Estruturas de Controle}
+As tags em Blade são prefixadas com a diretiva @. Suas estruturas de controle têm aparência mais clean quando comparadas com o PHP puro.
+
+\subsubsection{Condicionais}
+\begin{itemize}
+    \item \textbf{@if,@endif} \\
+        Compilado para:
+
+\begin{lstlisting}[style=common,caption={Correspondente ao @if em PHP puro}]
+    <?php if(%*\textbf{\$condicao}*)): ?>
+\end{lstlisting}
+
+    O mesmo serve para \textbf{@else} e \textbf{@elseif}.
+\end{itemize}
+
 \subsection{Socket.io}
+
 
 % ----------------------------------------------------------
 % PARTE - preparação da pesquisa
@@ -422,8 +829,8 @@ Seguir pontos do curso
 \part{Desenvolvimento}
 \chapter{Circuito}
 \begin{figure}[ht!]
-  \includegraphics[width=450pt]{images/circuit.png}
-  \caption{Esquemático do circuito}
+    \includegraphics[width=450pt]{images/circuit.png}
+    \caption{Esquemático do circuito}
 \end{figure}
 
 \section{Alimentação}
@@ -506,20 +913,20 @@ Raspberry por um host contratado
 % ---
 \begin{apendicesenv}
 
-% Imprime uma página indicando o início dos apêndices
-\partapendices
+    % Imprime uma página indicando o início dos apêndices
+    \partapendices
 
-% ----------------------------------------------------------
-\chapter{Quisque libero justo}
-% ----------------------------------------------------------
+    % ----------------------------------------------------------
+    \chapter{Quisque libero justo}
+    % ----------------------------------------------------------
 
-\lipsum[50]
+    \lipsum[50]
 
-% ----------------------------------------------------------
-\chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
-ac pretium ante justo a nulla curabitur tristique arcu eu metus}
-% ----------------------------------------------------------
-\lipsum[55-57]
+    % ----------------------------------------------------------
+    \chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
+    ac pretium ante justo a nulla curabitur tristique arcu eu metus}
+    % ----------------------------------------------------------
+    \lipsum[55-57]
 
 \end{apendicesenv}
 % ---
@@ -534,26 +941,26 @@ ac pretium ante justo a nulla curabitur tristique arcu eu metus}
 % ---
 \begin{anexosenv}
 
-% Imprime uma página indicando o início dos anexos
-\partanexos
+    % Imprime uma página indicando o início dos anexos
+    \partanexos
 
-% ---
-\chapter{Morbi ultrices rutrum lorem.}
-% ---
-\lipsum[30]
+    % ---
+    \chapter{Morbi ultrices rutrum lorem.}
+    % ---
+    \lipsum[30]
 
-% ---
-\chapter{Cras non urna sed feugiat cum sociis natoque penatibus et magnis dis
-parturient montes nascetur ridiculus mus}
-% ---
+    % ---
+    \chapter{Cras non urna sed feugiat cum sociis natoque penatibus et magnis dis
+    parturient montes nascetur ridiculus mus}
+    % ---
 
-\lipsum[31]
+    \lipsum[31]
 
-% ---
-\chapter{Fusce facilisis lacinia dui}
-% ---
+    % ---
+    \chapter{Fusce facilisis lacinia dui}
+    % ---
 
-\lipsum[32]
+    \lipsum[32]
 
 \end{anexosenv}
 
@@ -579,40 +986,40 @@ norma, ele é o último elemento pós-textual e opcional do relatório.
 \bigskip
 
 \begin{tabular}{|p{9cm}|p{5cm}|}
-\hline
-\multicolumn{2}{|c|}{\textbf{\large Dados do Relatório Técnico e/ou científico}}\\
-\hline
-\multirow{4}{10cm}[24pt]{Título e subtítulo}& Classificação de segurança\\
-                   & \\
-                   \cline{2-2}
-                   & No.\\
-                   & \\
-				
-\hline
-Tipo de relatório & Data\\
-\hline
-Título do projeto/programa/plano & No.\\
-\hline
-\multicolumn{2}{|l|}{Autor(es)} \\
-\hline
-\multicolumn{2}{|l|}{Instituição executora e endereço completo} \\
-\hline
-\multicolumn{2}{|l|}{Instituição patrocinadora e endereço completo} \\
-\hline
-\multicolumn{2}{|l|}{Resumo}\\[3cm]
-\hline
-\multicolumn{2}{|l|}{Palavras-chave/descritores}\\
-\hline
-\multicolumn{2}{|l|}{
-Edição \hfill No. de páginas \hfill No. do volume \hfill Nº de classificação \phantom{XXXX}} \\
-\hline
-\multicolumn{2}{|l|}{
-ISSN \hfill \hfill Tiragem \hfill Preço \phantom{XXXXXXXX}} \\
-\hline
-\multicolumn{2}{|l|}{Distribuidor} \\
-\hline
-\multicolumn{2}{|l|}{Observações/notas}\\[3cm]
-\hline
+    \hline
+    \multicolumn{2}{|c|}{\textbf{\large Dados do Relatório Técnico e/ou científico}}\\
+    \hline
+    \multirow{4}{10cm}[24pt]{Título e subtítulo}& Classificação de segurança\\
+                                                & \\
+                                                \cline{2-2}
+                                                & No.\\
+                                                & \\
+
+                                                \hline
+    Tipo de relatório & Data\\
+    \hline
+    Título do projeto/programa/plano & No.\\
+    \hline
+    \multicolumn{2}{|l|}{Autor(es)} \\
+    \hline
+    \multicolumn{2}{|l|}{Instituição executora e endereço completo} \\
+    \hline
+    \multicolumn{2}{|l|}{Instituição patrocinadora e endereço completo} \\
+    \hline
+    \multicolumn{2}{|l|}{Resumo}\\[3cm]
+    \hline
+    \multicolumn{2}{|l|}{Palavras-chave/descritores}\\
+    \hline
+    \multicolumn{2}{|l|}{
+    Edição \hfill No. de páginas \hfill No. do volume \hfill Nº de classificação \phantom{XXXX}} \\
+    \hline
+    \multicolumn{2}{|l|}{
+    ISSN \hfill \hfill Tiragem \hfill Preço \phantom{XXXXXXXX}} \\
+    \hline
+    \multicolumn{2}{|l|}{Distribuidor} \\
+    \hline
+    \multicolumn{2}{|l|}{Observações/notas}\\[3cm]
+    \hline
 \end{tabular}
 
-\end{document}
+   \end{document}
