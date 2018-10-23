@@ -202,6 +202,10 @@ brazil,				% o último idioma é o principal do documento
 }
 
 \usepackage{tcolorbox}      % Para box arredondado
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{float}      % para usar o H como parâmetro no include figure
 % ---
 
 % --- 
@@ -546,7 +550,7 @@ Com um completo e autônomo sistema de conexão \textit{Wi-Fi} (suporte a \texti
 
 Pode ser implementado como um "módulo \emph{WiFi}" em conjunto com qualquer microcontrolador e comunicá-los através de interfaces \textbf{\textsf{SPI}}, \textbf{\textsf{I2C}} e \textbf{\textsf{UART}} disponíveis na placa. 
 
-\section{Alimentação}
+\subsection{Alimentação}
 
 A faixa de tensão de operação do \textit{ESP8266} é de \textbf{\textsf{2.5V}} à \textbf{\textsf{3.6V}}, sendo necessário o fornecimento de, ao menos, \textbf{\textsf{500mA}} de corrente.
 \vspace{5pt}
@@ -554,27 +558,191 @@ A faixa de tensão de operação do \textit{ESP8266} é de \textbf{\textsf{2.5V}
 \begin{tcolorbox}[colbacktitle=red!65!white,
     title={\vspace{-13pt}\includegraphics[scale=0.014]{images/x.png} \hspace{2pt} \textsf{\textbf{CUIDADO!}\vspace{2pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
     \raggedright
-     O ESP8266 \textsf{\textbf{não é}} tolerante à 5V. Alimentá-lo com essa tensão pode - \textit{e vai} - danificar seu dispositivo.
+    O ESP8266 \textsf{\textbf{não é}} tolerante à 5V. Alimentá-lo com essa tensão pode - \textit{e vai} - danificar seu dispositivo.
 \end{tcolorbox}
 
 
 
+\subsection{Modos de operação}
+O \textit{ESP8266} possui \textbf{\textsf{três}} modos de boot: 
+
+\begin{table}[!ht]
+    \centering
+    \footnotesize{
+        \label{Modos-Energia}
+        \caption{Modos de boot}
+        \begin{tabular}{>{\bfseries}lp{5.35cm}}
+            \toprule
+            UART mode & Modo deve ser selecionado para realizar o upload de um novo \textit{firmware} no MCU. A \textbf{\textsf{GPIO0}} deve estar em \textbf{\textsf{GND} / \textbf{\textsf{GPIO2}} em \textbf{\textsf{VCC}}}. \\\midrule
+            Flash mode & Neste modo, o boot é realizado da memória \textit{flash}. O último firmware gravado será executado. A \textbf{\textsf{GPIO0}} deve estar em \textbf{\textsf{VCC}} / \textbf{\textsf{GPIO2}} em \textbf{\textsf{VCC}} \\\midrule
+            SDIO mode & Quando habilitado, o MCU realiza o boot não da memória \textit{flash}, mas sim de um cartão SD, usando protocolo \textit{SPI}. A \textbf{\textsf{GPIO15}} deve estar em \textbf{\textsf{VCC}}. \\\bottomrule
+        \end{tabular}
+    }
+\end{table}
+
+\subsection{GPIOS}
+
+O \textit{ESP8266} possui 17 pinos GPIO que podem assumir varias funções através da devida programação de seus registradores. Cada um dos pinos pode ser configurado com \textbf{\textsf{pull-up}} ou \textbf{\textsf{pull-down}} interno e também alta impedância. Possui um pino \textbf{\textsf{ADC}}, TOUT $\perp$ 9, de resolução de 1024 bits, porém sua alimentação deve ser limitada de 0 a 1V.
+
+\subsection{\textit{I2C}}
+\textit{I2C} (\textit{Inter-integrated Circuit}) é um protocolo de comunicação \textit{master/slave} entre dispositivos que se baseia em um barramento de apenas duas vias: \textbf{\textsf{SDA}} (Serial Data) por onde são transmitidos e recebidos os dados e \textbf{\textsf{SCL}} (Serial Clock) que dita a temporização do tráfego das informações. O grande diferencial do protocolo é que são permitidos, teoricamente, até 127 dispositivos distintos comunicando através de um mesmo barramento.
+
+O ESP8266 possui suporte a interface \textit{I2C}, tanto como Master quanto Slave, para comunicação com outros microcontroladores e outros equipamentos periféricos, como sensores. A pinagem do barramento é vista pela Tabela \ref{I2C-table} abaixo:
+
+\begin{table}[ht]
+    \centering
+    \caption{Pinagem I2C \label{I2C-table}}
+    \begin{tcolorbox}[tabularx={c|Y|Y}]
+        \textbf{Pino} & \textbf{Função}     & \textbf{Descrição}    \\\hline
+        \emph{GPIO02 $\perp$ 14}      & SDA   & Pino de dados   \\
+        \emph{MTMS $\perp$ 9}          & SCL   & Pino de Clock           
+    \end{tcolorbox}
+\end{table}     
+
+\subsection{UART}
+
+O \textit{ESP8266} possui \textbf{\textsf{duas}} interfaces \textit{UART }(Universal Asynchronous Receiver/Transmitter) que podem alcançar\textbf{ \textsf{4.5 Mbps}} de velocidade de transferência: a \textbf{\textsf{UART0}}, que pode ser usada para comunicação bidirecional; e a \textbf{\textsf{UART1}} que apenas envia dados, por seu pino \textit{TX} (geralmente usado como \textit{debugger}).
+
+\begin{table}[ht]
+    \centering
+    \caption{Pinagem UART \label{UART-table}}
+    \begin{tcolorbox}[tabularx={c |Y|Y}]
+    \textbf{Pino} & \textbf{Função}     & \textbf{Descrição}    \\\hline
+    \emph{GPIO1 $\perp$ 26}      & TX0   & \small{Transmissão Serial}   \\
+    \emph{GPIO3 $\perp$ 25}          & RX0   & \small{Recepção Serial}  \\
+    \emph{GPIO2 $\perp$ 23}          & TX1   & \small{Transmissão Serial}          
+\end{tcolorbox}
+\end{table}     
+
+\subsection{Watchdog}
+\textit{Watchdog timer} é um circuito contador independente do clock principal e que serve como um recurso de segurança adicional.
+
+Uma das maiores diferenças entre o \textit{ESP8266} e um MCU utilizado em alguns modelos \textit{Arduino}, é o fato de que o microcontrolador da \textit{Espressif} executa varias tarefas em segundo plano: mantém a conexão do modem Wi-Fi, gerencia a pilha do protocolo TCP/IP, etc. Para manter a execução destas tarefas, ele possui dois watchdog timers: \textbf{\textsf{SW\_WDT}}, que é via software; e \textbf{\textsf{HW\_WDT}}, via Hardware. Caso uma função gere um loop longo (mais de 3 segundos) onde não haja alimentação do watchdog, o microcontrolador irá reiniciar, justamente para manter a execução das tarefas de segundo plano.
+
+Consulte a subseção \ref{subsec:yield-oi} para melhor entendimento de como o software controla o \textit{timer} do \textit{Watchdog}. Este tópico tratará da função \emph{yield()}, que realiza a alimentação do \textbf{\textsf{SW\_WDT}}.
+
+\subsection{PWM}
+
+\textit{PWM} (ou \textit{Modulação por Largura de Pulso}) se refere a um tipo de sinal digital que permite a variação do tempo, de forma analógica, em que um sinal digital assume nível lógico alto. Desta forma, é possível modular a largura do pulso (duração do nível alto) e gerar sinais de tensões intermediárias. 
+
+\vspace{10pt}
+
+\begin{tcolorbox}[colbacktitle=green!50!white!60,
+    title={\vspace{-13pt}\includegraphics[scale=0.032]{images/notebook.png} \hspace{2pt} \textsf{\textbf{Na Prática...}\vspace{4pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
+    \raggedright
+    Para usarmos um pino como saída de PWM:
+    \begin{lstlisting}[style=c]
+    analogWrite(pino, valor); 
+    \end{lstlisting}
+    Alterar a frequência do sinal:
+    \begin{lstlisting}[style=c]
+    analogWriteFreq(novaFrequencia); //100 Hz and 1 kHz
+    \end{lstlisting}
+    Alterar o \textit{range} do sinal:
+    \begin{lstlisting}[style=c]
+    analogWriteRange(novoRange); // 1024 por padrão -> 2^10
+    \end{lstlisting}
+
+\end{tcolorbox}
+
+\vspace{7pt}
+\begin{tcolorbox}[colbacktitle=blue!70!white!50,
+    title={\vspace{-13pt}\includegraphics[scale=0.033]{images/interrogacao.png} \hspace{2pt} \textsf{\textbf{Você sabia?}\vspace{4pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
+    \raggedright
+
+    Uma clássica experiência do modelo pode ser realizada ao chavear, rapidamente, o interruptor da iluminação do seu quarto, por exemplo. A sensação será a de uma iluminação intermediária entre lâmpada desligada e normalmente acesa.
+
+\end{tcolorbox}
 
 
 
-\begin{table}[ ]
-    \begin{tabular}{|l|l|l|}
-        \hline
+O ESP8266 possui 4 pinos de interface \textit{PWM}, mas podem ser estendidos pelo usuário. A definição padrão dos pinos é dada pela Tabela \ref{PWM-table} abaixo.
+
+
+
+\begin{table}[ht]
+    \centering
+    \caption{Pinagem PWM \label{PWM-table}}
+    \resizebox{0.5\textheight}{!}{
+        \begin{threeparttable}
+
+            \begin{tcolorbox}[tabularx={X|Y}]
+                \textbf{Pino} & \textbf{Função}   \\\hline
+                \emph{MTDI $\perp$ 10}      & PWM0   \\
+                \emph{MTDO $\perp$ 13}          & PWM1  \\
+                \emph{MTMS $\perp$ 9}          & PWM2  \\
+                \emph{GPIO4 $\perp$ 16}          & PWM4  \\[1ex]
+            \end{tcolorbox}
+        \end{threeparttable}
+    }
+\end{table}     
+
+\subsection{Interrupção externa}
+Interrupções são eventos ou condições que levam o microcontrolador a pausar a execução de uma tarefa em andamento, executar outra temporariamente e, então, retornar para a tarefa inicial.
+
+Com exceção do pino \emph{GPIO16 $\perp$ 8}, todas as demais GPIOs do ESP8266 possuem funcionalidade de interrupção externa.
+
+\vspace{10pt}
+
+\begin{tcolorbox}[colbacktitle=green!50!white!60,
+    title={\vspace{-13pt}\includegraphics[scale=0.032]{images/notebook.png} \hspace{2pt} \textsf{\textbf{Na Prática...}\vspace{4pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
+    \raggedright
+    Podemos utilizar uma interrupção que será deflagrada ao estado do sinal do pino apresentar uma curva de subida - \textit{rising} - e chamará a função \emph{resolveInterrupcao()} da seguinte forma:
+
+    \begin{lstlisting}[style=c] 
+    void setup() {
+        ...
+        pinMode(pinoDeInterrupcao, INPUT);
+        attachInterrupt(pinoDeInterrupcao, resolveInterrupcao, "RISING");
+        // Alem de "RISING", pode assumir "CHANGE" ou "FALLING"
+         ...
+    }
+
+    void resolveInterrupcao() {
+        ...
+    }
+\end{lstlisting}
+
+\end{tcolorbox}
+
+\subsection{Consumo de Energia}
+O ESP8266 já possui modos de consumo definidos, que gerenciam o funcionamento de algumas funcionalidades visando economia energética de acordo com cada tipo de aplicação. 
+
+A Tabela \ref{Modos-Energia} apresenta estes modos, suas funções ativas e consumo médio.
+
+\vspace{10pt}
+
+\begin{table}[!ht]
+    \centering
+    \footnotesize{
+        \label{Modos-Energia}
+        \caption{Modos de Consumo Energético}
+        \begin{tabular}{>{\bfseries}lp{5.35cm}}
+            \toprule
+            modem-sleep & Modo usado em aplicações que requerem a CPU funcionando, como em aplicações com PWM e I2S. "Desliga" o circuito do Modem Wi-Fi enquanto mantiver uma conexão Wi-Fi sem transmissão de dados. \emph{Consumo médio: 15mA}. \\\midrule
+            light-sleep & Durante o modo, a CPU pode ser suspendida em aplicações como uma interruptor Wi-Fi. Sem haver transmissão de dados, a o circuito do Modem Wi-Fi pode ser desligado e a CPU suspendida para economia de consumo de energia. \emph{Consumo médio: 0.9mA.} \\\midrule
+            deep-light & Durante o modo, o modem Wi-Fi é totalmente desligado. Para aplicações onde existam longos intervalos de tempo sem transmissão de dados. Por exemplo, o monitoramento da temperatura ambiente, lendo dados durante um período, dormindo por outro período e acordando para reconectar a um ponto de acesso. \emph{Consumo médio: 20$\mu$A}. \\\bottomrule
+        \end{tabular}
+    }
+\end{table}
+
+
+
+
+
+   \begin{table}[ ]
+       \begin{tabular}{|l|l|l|}
+           \hline
                      & ESP-12           & ATMEGA-328p     \\ \hline
-        Arquitetura                                                      & 32-bits          & 8-bits          \\ \hline
-        Frequência                                                       & 80 $\sim$160 MHz & 16 $\sim$20 MHz \\ \hline
-        \begin{tabular}[c]{@{}l@{}}Tensão \\ \\ de operação\end{tabular} & 2.5 $\sim$3.6V   & 1.8 $\sim$5.5V  \\ \hline
-        \begin{tabular}[c]{@{}l@{}}Memória \\ \\ Flash\end{tabular}      & 1Mb $\sim$4Mb    & 32Kb            \\ \hline
-        \begin{tabular}[c]{@{}l@{}}Memória \\ \\ RAM\end{tabular}      & 15 $\sim$26Kb*    & 2Kb            \\ \hline
-        GPIOS                                                            & 18 (17/d e 1/a)  & 20 (14/d e 6/a) \\ \hline
-        Preço                                                            & \$8,79           & \$9,99          \\ \hline
-    \end{tabular}
-    \caption{Especificações ESP8266 vs ATMEGA-328p}
+           Arquitetura                                                      & 32-bits          & 8-bits          \\ \hline
+           Frequência                                                       & 80 $\sim$160 MHz & 16 $\sim$20 MHz \\ \hline
+           \begin{tabular}[c]{@{}l@{}}Tensão \\ \\ de operação\end{tabular} & 2.5 $\sim$3.6V   & 1.8 $\sim$5.5V  \\ \hline
+           \begin{tabular}[c]{@{}l@{}}Memória \\ \\ Flash\end{tabular}      & 1Mb $\sim$4Mb    & 32Kb            \\ \hline
+           \begin{tabular}[c]{@{}l@{}}Memória \\ \\ RAM\end{tabular}      & 15 $\sim$26Kb*    & 2Kb            \\ \hline
+           GPIOS                                                            & 18 (17/d e 1/a)  & 20 (14/d e 6/a) \\ \hline
+           Preço                                                            & \$8,79           & \$9,99          \\ \hline
+       \end{tabular}
+       \caption{Especificações ESP8266 vs ATMEGA-328p}
 \end{table}
 
 
