@@ -92,7 +92,7 @@ brazil,				% o último idioma é o principal do documento
 \definecolor{bege}{rgb}{0.95,0.95,0.9}
 
 \usepackage{caption}
-\captionsetup{lstlisting}{font={small,tt}}
+
 \usepackage{listings}				% para inclusão de códigos-fonte no documento
 \lstdefinestyle{bash}{ 
     backgroundcolor=\color{black},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
@@ -182,6 +182,26 @@ brazil,				% o último idioma é o principal do documento
     tabsize=2,                       % sets default tabsize to 2 spaces
     title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
+
+\lstdefinestyle{c}{
+    language=C++,
+    basicstyle=\ttfamily\footnotesize, 
+    keywordstyle=\color{blue}, 
+    stringstyle=\color{x}, 
+    commentstyle=\color{red}, 
+    extendedchars=true, 
+    showspaces=false, 
+    showstringspaces=false, 
+    %numbers=left,
+    % numberstyle=\tiny,
+    breaklines=true, 
+    backgroundcolor=\color{gray!10},
+    breakautoindent=true, 
+    captionpos=t,
+    xleftmargin=0pt,
+}
+
+\usepackage{tcolorbox}      % Para box arredondado
 % ---
 
 % --- 
@@ -495,6 +515,53 @@ porém o ESP8266 conta com upload OTA (over-the-air), que é a gravação atrav�
 Seguir pontos do curso
 \section{Especificações}
 
+\subsection{CPU}
+
+O ESP8266 utiliza o processador Tensilica L106 32-bit, RISC e que possui velocidade de clock de 80MHz.
+\vspace{10pt} 
+\begin{tcolorbox}[colbacktitle=green!50!white!60,
+    title={\vspace{-13pt}\includegraphics[scale=0.032]{images/notebook.png} \hspace{2pt} \textsf{\textbf{Na Prática...}\vspace{4pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
+    \raggedright
+
+    Facilmente, podemos alterar - \textit{overclock} - da \textit{CPU} para 160MHz! Para isso, basta adicionarmos o seguinte código no escopo geral do código:
+    \begin{lstlisting}[style=c]
+    extern "C" {
+        bool system_update_cpu_req(int);
+        }
+
+    \end{lstlisting}
+
+    E na função \emph{setup()}:
+    \begin{lstlisting}[style=c]
+    void setup(){
+        ...
+        system_update_cpu_freq(160);
+        ...
+    }
+    \end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Modem \textit{Wi-Fi}}
+Com um completo e autônomo sistema de conexão \textit{Wi-Fi} (suporte a \textit{802.11b/g/n/e/i}), o \textit{ESP8266} pode tanto estabelecer uma rede própria, em modo \textbf{\textsf{AP}}, ou um se conectar a um \textit{host}, em modo \textbf{\textsf{STA}}. Possui ainda o modo \textbf{\textsf{AP\_STA}}, que cria uma rede, mas também acessa uma \textit{station}, simultaneamente. 
+
+Pode ser implementado como um "módulo \emph{WiFi}" em conjunto com qualquer microcontrolador e comunicá-los através de interfaces \textbf{\textsf{SPI}}, \textbf{\textsf{I2C}} e \textbf{\textsf{UART}} disponíveis na placa. 
+
+\section{Alimentação}
+
+A faixa de tensão de operação do \textit{ESP8266} é de \textbf{\textsf{2.5V}} à \textbf{\textsf{3.6V}}, sendo necessário o fornecimento de, ao menos, \textbf{\textsf{500mA}} de corrente.
+\vspace{5pt}
+
+\begin{tcolorbox}[colbacktitle=red!65!white,
+    title={\vspace{-13pt}\includegraphics[scale=0.014]{images/x.png} \hspace{2pt} \textsf{\textbf{CUIDADO!}\vspace{2pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
+    \raggedright
+     O ESP8266 \textsf{\textbf{não é}} tolerante à 5V. Alimentá-lo com essa tensão pode - \textit{e vai} - danificar seu dispositivo.
+\end{tcolorbox}
+
+
+
+
+
+
 \begin{table}[ ]
     \begin{tabular}{|l|l|l|}
         \hline
@@ -635,7 +702,7 @@ Todos projetos Laravel possuem a mesma estrutura de diretórios padrão:
     \item /database $\rightarrow$ Contém as migrations (operações nas models) e seeds;
 
     \item /public $\rightarrow$ É o diretório que o servidor aponta. Contém o index.php, que é o controlador frontal que inicia o processo de bootstrapping e roteia as solicitações adequadamente. Contém arquivos voltados ao cliente, como imagens, css, scripts ou downloads;
-        
+
     \item /resources $\rightarrow$ Contém arquivos não PHP necessários para a realização de outros scripts. Views e arquivos opcionais, como Sass/Less e javascript;
 
     \item /routes $\rightarrow$ Contém as definições de rotas. Tanto para rotas HTTP, quanto para "rotas de console", por exemplo, o comando artisan;
@@ -816,24 +883,24 @@ As tags em Blade são prefixadas com a diretiva @. Suas estruturas de controle t
     \item \textbf{@if, @endif} \\
         Transcrito para:
 
-\begin{lstlisting}[style=common,caption={Correspondente ao @if em PHP puro}]
+        \begin{lstlisting}[style=common,caption={Correspondente ao @if em PHP puro}]
     <?php if(%*\textbf{\$condicao}*)): ?>
 \end{lstlisting}
 
-    O mesmo serve para \textbf{@else} e \textbf{@elseif}.
+O mesmo serve para \textbf{@else} e \textbf{@elseif}.
 
     \item \textbf{@unless, @endunless} \\
 
         É o mesmo que:
 
-\begin{lstlisting}[style=common,caption={Variação do @if}]
+        \begin{lstlisting}[style=common,caption={Variação do @if}]
     @if (!%*\textbf{\$variavel}*))
 \end{lstlisting}
 
     \item \textbf{or} \\
         Helper que substitui o \textit{isset()}. Confere se a variável foi declarada \textbf{ou} retorna um valor padrão definido. Como, por exemplo:
 
-\begin{lstlisting}[style=common,caption={Correspondente ao \textit{isset()} em PHP puro}]
+        \begin{lstlisting}[style=common,caption={Correspondente ao \textit{isset()} em PHP puro}]
     {{ %*\textbf{\$variavel}*) or "default" }}
 \end{lstlisting}
 
@@ -855,9 +922,9 @@ As tags em Blade são prefixadas com a diretiva @. Suas estruturas de controle t
 O Laravel possui diretivas que definem seções que podem ser estendidas e reutilizadas por templates-filhos:
 \begin{itemize}
     \item \textbf{@yield} \\
-       Define uma seção com nome específico. Pode ter um valor default, caso a seção não seka estendida. O primeiro parâmetro de uma seção é sempre seu nome. Veja os exemplos: 
+        Define uma seção com nome específico. Pode ter um valor default, caso a seção não seka estendida. O primeiro parâmetro de uma seção é sempre seu nome. Veja os exemplos: 
 
-\begin{lstlisting}[style=common,caption={Valor default usando \textit{@yield}}]
+        \begin{lstlisting}[style=common,caption={Valor default usando \textit{@yield}}]
     <title> @yield('titulo', 'Meu titulo') </title>
 \end{lstlisting}
 
@@ -888,7 +955,7 @@ Podemos controlar se uma seção possui uma sobrescrita (ou pegar seu valor) de 
 
         Veja os exemplos:
 
-\begin{lstlisting}[style=common,caption={Passagem de parâmetro por @include}]
+        \begin{lstlisting}[style=common,caption={Passagem de parâmetro por @include}]
     @include ('botao-login', ['texto' => 'Faça seu login'])
 \end{lstlisting}
 
