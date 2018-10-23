@@ -726,24 +726,273 @@ A Tabela \ref{Modos-Energia} apresenta estes modos, suas funções ativas e cons
     }
 \end{table}
 
-
-
-
-
-   \begin{table}[ ]
-       \begin{tabular}{|l|l|l|}
-           \hline
+\subsection{Comparação com Arduino}
+Uma comparação direta pode ser assumida com seu famoso - \textit{querido} - concorrente: o Arduino. A Tabela \ref{Comparação} ilustra uma comparação de hardware e desempenho entre o ESP8266 e o Arduino Uno, a plataforma mais utilizada do Arduino.
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|}
+        \hline
                      & ESP-12           & ATMEGA-328p     \\ \hline
-           Arquitetura                                                      & 32-bits          & 8-bits          \\ \hline
-           Frequência                                                       & 80 $\sim$160 MHz & 16 $\sim$20 MHz \\ \hline
-           \begin{tabular}[c]{@{}l@{}}Tensão \\ \\ de operação\end{tabular} & 2.5 $\sim$3.6V   & 1.8 $\sim$5.5V  \\ \hline
-           \begin{tabular}[c]{@{}l@{}}Memória \\ \\ Flash\end{tabular}      & 1Mb $\sim$4Mb    & 32Kb            \\ \hline
-           \begin{tabular}[c]{@{}l@{}}Memória \\ \\ RAM\end{tabular}      & 15 $\sim$26Kb*    & 2Kb            \\ \hline
-           GPIOS                                                            & 18 (17/d e 1/a)  & 20 (14/d e 6/a) \\ \hline
-           Preço                                                            & \$8,79           & \$9,99          \\ \hline
-       \end{tabular}
-       \caption{Especificações ESP8266 vs ATMEGA-328p}
+        Arquitetura                                                      & 32-bits          & 8-bits          \\ \hline
+        Frequência                                                       & 80 $\sim$160 MHz & 16 $\sim$20 MHz \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Tensão \\ \\ de operação\end{tabular} & 2.5 $\sim$3.6V   & 1.8 $\sim$5.5V  \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Memória \\ \\ Flash\end{tabular}      & 1Mb $\sim$4Mb    & 32Kb            \\ \hline
+        \begin{tabular}[c]{@{}l@{}}Memória \\ \\ RAM\end{tabular}      & 15 $\sim$26Kb*    & 2Kb            \\ \hline
+        GPIOS                                                            & 18 (17/d e 1/a)  & 20 (14/d e 6/a) \\ \hline
+        Preço                                                            & \$8,79           & \$9,99          \\ \hline
+    \end{tabular}
+    \label{Comparação}
+    \caption{Especificações ESP8266 vs ATMEGA-328p}
 \end{table}
+
+\section{Firmware}
+
+O firmware padrão traz um conjunto de instruções \href{https://www.espressif.com/sites/default/files/documentation/4A-ESP8266_AT_Instruction_Set__EN.pdf}{AT},
+porém é possível realizar o upload de outros firmwares para
+programação em linguagens mais comuns como o \href{http://nodemcu.com/index_en.html}{nodeMCU} (Lua)
+e o \href{https://micropython.org/}{micropython}\footnote{Possuo um tutorial detalhado para preparação do ambiente micropython. Acesse-o \href{https://github.com/GabrielMMelo/esp8266-course}{aqui}.} (Python). Ambos os firmwares baseam em um
+sistema interno de arquivos, com um arquivo "main" executado no boot e também possuem sua própria biblioteca que é atualizada por suas comunidades. Entretanto, a Arduino IDE possui, atualmente, suporte ao ESP8266, tornando possível a programação
+em Arduino (C++), utilizando, inclusive, algumas bibliotecas do
+mesmo sem realizar quaisquer alterações.
+
+\subsection{Conversores \textit{USB} para \textit{UART}}
+O ESP8266 não possui, nativamente, interface para comunicação USB, porém existem conversores que facilitam a comunicação entre o microcontrolador e um PC para realização do upload do programa, por exemplo. 
+
+É possível ainda utilizar de dispositivos que já possuam um conversor interno para realizar o upload, como o Arduino UNO. Interligando os pinos de UART dos dois dispositivos (TX(ESP) $\rightarrow$ RX(Arduino) e RX(ESP) $\rightarrow$ TX(Arduino)) é possível realizar a comunicação do \textit{ESP8266} com um PC através do conversor USB do Arduino.
+
+\vspace{10pt}
+
+\begin{tcolorbox}[colbacktitle=yellow!60!white,
+    title={\vspace{-13pt}\includegraphics[scale=0.03]{images/exclamacao.png} \hspace{2pt} \textsf{\textbf{ATENÇÃO!}\vspace{2pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
+    \raggedright
+    A faixa de tensão de operação do ESP8266 é de \textsf{2.5} a \textsf{3.6V}, sendo necessário, então, um divisor de tensão do \textit{TX} (Arduino), que possui \textsf{5V}, para o \textit{RX} (ESP8266).
+\end{tcolorbox}
+
+
+\subsection{\textit{IDE Arduino}}
+
+Implementada em \textit{Java}, a \textit{IDE Arduino} possui uma interface \textbf{\textsf{simples}} e \textbf{\textsf{objetiva}}.
+
+Apesar de não apresentar algumas funções e macros presentes em outros editores de texto, como \textit{auto-complete} e snippets, a \textit{IDE} possui recursos interessantes ao usúario. como o \textbf{\textsf{Monitor Serial}}.
+
+\subsection{Monitor Serial}
+
+É uma interface de interação com o usuário e depuração do código compilado fornecida pela \textit{\textsf{IDE Arduino}}, onde é possível visualizar dados enviados, via comunicação serial, do MCU para um PC. É possível usá-lo, também, para envio de dados em tempo real do computador para o microcontrolador. Todos os projetos exemplificados neste livro utilizam o \textsf{\textbf{Monitor Serial}} para identificarmos as etapas de execução do programa no \textit{ESP8266}.
+
+\vspace{5pt}
+
+\begin{tcolorbox}[colbacktitle=green!50!white!60,
+    title={\vspace{-13pt}\includegraphics[scale=0.032]{images/notebook.png} \hspace{2pt} \textsf{\textbf{Na Prática...}\vspace{4pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
+    \raggedright
+
+    Antes de utilizarmos o \textbf{\textsf{Monitor Serial}}, devemos nos certificar de ter inicializado a comunicação serial com seu \textit{baudrate} (tava de transferência de dados), via software:
+
+    \begin{lstlisting}[style=c]
+    void setup(){
+        ...
+        Serial.begin(115200);
+        ...
+    }
+    \end{lstlisting}
+
+    Para escrevermos alguma mensagem no monitor, usamos a função \emph{print()}:
+
+    \begin{lstlisting}[style=c]
+    Serial.print("MENSAGEM PARA MONITOR");
+    \end{lstlisting}
+
+\end{tcolorbox}
+
+\subsection{A Linguagem \textit{Arduino}}
+\label{sec:arduino}
+Baseada em \textbf{\textsf{C++}}, a linguagem de domínio específico \textit{Arduino} traz facilidades ao programador de microcontroladores com funções de leitura, escrita e depuração de pinos de I/O implementadas. Além das funções estruturais \emph{loop()} e \emph{setup()}, que guiam o desenvolvimento do software.
+
+A DSL Arduino possui suporte à orientação a abjetos, alocação dinâmica e manipulação de ponteiros, bem como os tipos de dados aceitos por sua linguagem "mãe".
+
+\subsubsection{Funções Estruturais}
+Um código em Arduino possui duas funções essenciais: a \textit{loop()} e a setup():
+
+\begin{table}[!ht]
+    \centering
+    \label{Funcoes-basicas}
+    \caption{Funções básicas}
+    \footnotesize{
+        \begin{tabular}{>{\bfseries}lp{5.35cm}}
+            \toprule
+
+            void setup() & Função executada apenas uma vez após o MCU dar o boot ou reset. Nela são inicializadas variáveis e indicadas classes, setados modos de entrada ou saída dos pinos, etc. \\\midrule
+            void loop() & Função chamada após executar a void \textit{setup()}, que rege a execução do código, repetindo infinitas vezes seu conteúdo. Ao final de um ciclo de execução da função, é chamada a função \textit{yield()} para dar feed ao \emph{SW WDT}. \\\bottomrule
+        \end{tabular}
+    }
+\end{table}
+
+\begin{tcolorbox}[colbacktitle=green!50!white!60,
+    title={\vspace{-13pt}\includegraphics[scale=0.032]{images/notebook.png} \hspace{2pt} \textsf{\textbf{Na Prática...}\vspace{4pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
+    \raggedright
+    \begin{lstlisting}[style=c] 
+        void setup() {
+            ...
+        }
+
+        void loop() {
+            ...
+        }
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsubsection{Timer: \textit{delay()} {\normalsize{\emph{VS}}} \textit{millis()}}
+A linguagem possui duas funções principais para contagem de tempo durante execução do programa:
+
+\begin{table}[!ht]
+    \centering
+    \label{timers}
+    \footnotesize{
+        \caption{Funções de contagem de tempo}
+        \begin{tabular}{>{\bfseries}lp{5.35cm}}
+            \toprule
+            delay(\emph{tempo}) & Função que recebe em \emph{tempo} um valor, em millisegundos, em que o MCU irá pausar a maioria das tasks e retornar a execução normal após este período. A função, porém não desabilita interrupções e mantém os valores da porta serial (recebidos em \emph{RX}), PWM e estados dos pinos.
+
+            \textit{A função delay() chama, internamente, a função} \textbf{\textsf{yield()}}.   \\\midrule
+
+            millis() & Função retorna o tempo, em milisegundos, desde o início do programa atual. O valor retornado tem tipo \emph{unsigned long} e sofrerá overflow em cerca de 50 dias de execução contínua do MCU.
+
+            \textit{A função millis() \textbf{\textsf{não}} chama, internamente, a função} \textbf{\textsf{yield()}}.\\\bottomrule
+        \end{tabular}
+    }
+\end{table}
+
+\subsubsection{Função \textit{yield()}}
+\label{subsec:yield-oi}
+Uma das situações mais comuns aos novos usuários do ESP8266, é o reset inesperado -  \textit{e misterioso} - do MCU. Como visto anteriormente, o 8266 possui 2 circuitos de \textit{Watchdog} sendo um via software (SW\_WDT) e outro via Hardware (HW\_WDT). O SW\_ WDT é alimentado justamente pela função \textit{yield()}, que faz a contagem de seu timer (cerca de 3 segundos) reiniciar.
+
+\begin{tcolorbox}[colbacktitle=green!50!white!60,
+title={\vspace{-13pt}\includegraphics[scale=0.032]{images/notebook.png} \hspace{2pt} \textsf{\textbf{Na Prática...}\vspace{4pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
+\raggedright
+No trecho de código abaixo podemos analisar o uso do \emph{yield()} para evitar o reset do microcontrolador:
+\begin{lstlisting}[style=c]
+    void loop() {
+        ...
+        piscaLed(led,10000); // recebe o tempo em milissegundos
+        ...
+    }
+               
+    int piscaLed(int led,int tempo) {
+        int tempoInicial = millis();
+        int contador = tempoInicial;
+        while (contador - tempoInicial < tempo) {
+            digitalWrite(led, HIGH);
+            delayMicroseconds(500000);
+            digitalWrite(led, LOW);
+            delayMicroseconds(500000);
+            contador = millis();
+            yield();
+        }
+    }
+\end{lstlisting}
+
+Como a função \emph{piscaLed()} possui um loop interno que dura, no caso, 10 segundos, caso comentássemos a chamada da \emph{yield()}, o \emph{SW\_WDT} não seria alimentado e, em cerca de 3 segundos, o microcontrolador se reiniciaria. Podemos, analogamente, utilizar as seguintes funções que chamam internamente a \emph{yield()} para evitar o \textit{reset}:
+
+\begin{lstlisting}[style=c]
+    delay();
+\end{lstlisting}
+ou
+\begin{lstlisting}[style=c]
+    ESP.wdtFeed(); // Esta, porem, alimenta tambem o HW_WDT
+\end{lstlisting}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[colbacktitle=yellow!60!white,
+   title={\vspace{-13pt}\includegraphics[scale=0.03]{images/exclamacao.png} \hspace{2pt} \textsf{\textbf{ATENÇÃO!}\vspace{2pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
+   \raggedright
+    As funções \emph{delayMicroseconds()} e \emph{millis()} \textsf{\textbf{não}} chamam, internamente, a função \emph{yield().}
+\end{tcolorbox}
+
+\subsection{SPIFFS}
+Um dos problemas enfrentados pelos programadores de microcontroladores é a limitação física da memória, principalmente, na memória flash. Pensando nisso, o \textit{ESP8266} traz, nativamente, um sistema interno de arquivos baseado em um sistema \textit{SPI NOR Flash}. Não suporta criação e manipulação de diretórios, porém é possível nomear um arquivo utilizando "/", tornando possível, ao menos, fantasiar um diretório.
+
+\vspace{8pt}
+
+\begin{tcolorbox}[colbacktitle=green!50!white!60,
+    title={\vspace{-13pt}\includegraphics[scale=0.032]{images/notebook.png} \hspace{2pt} \textsf{\textbf{Na Prática...}\vspace{4pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
+    \raggedright
+
+    Inicia o SPIFFS
+\begin{lstlisting}[style=c]
+SPIFFS.begin();
+\end{lstlisting}
+
+Abre um arquivo
+\begin{lstlisting}[style=c]
+SPIFFS.open(path, mode); // mode recebe "r", "w", "a", "r+", "w+" ou "a+".
+\end{lstlisting}
+
+Remove um arquivo
+\begin{lstlisting}[style=c]
+SPIFFS.remove(path)
+\end{lstlisting}
+
+Fecha um arquivo
+\begin{lstlisting}[style=c]
+file.close()
+\end{lstlisting}
+
+
+\end{tcolorbox}
+
+\subsection{PROGMEM}
+Ainda pesando na limitação de hardware da memória, o ESP importa da biblioteca do Arduino uma função que possibilita a alocação de strings e variáveis na memória flash (que é bem maior) ao invés da RAM: a \textbf{\textsf{PROGMEM}}.
+
+\vspace{10pt}
+
+\begin{tcolorbox}[colbacktitle=green!50!white!60,
+title={\vspace{-13pt}\includegraphics[scale=0.032]{images/notebook.png} \hspace{2pt} \textsf{\textbf{Na Prática...}\vspace{4pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
+\raggedright
+Existem duas formas de declarar uma variável para ser armazenada em \textbf{\textsf{flash}}:
+
+\begin{lstlisting}[style=c]
+    const tipoDado nomeVariavel[] PROGMEM = {};
+\end{lstlisting}
+ou
+\begin{lstlisting}[style=c]
+    const PROGMEM tipoDado nomeVariavel[] = {}; 
+\end{lstlisting}
+
+Em ambas, após a alocação na memória, para acessar o seu conteúdo são necessários funções especiais de leitura. Por exemplo, para recuperar o valor da variável \emph{mensagem} declarada como:
+
+\begin{lstlisting}[style=c]
+    const char mensagem[] PROGMEM = {"ESTE LIVRO EH UMA INTRODUCAO AO IOT"}; 
+\end{lstlisting}
+
+Devemos fazê-la da seguinte forma:
+
+\begin{lstlisting}[style=c]
+    char mensagemAux;
+    for (k = 0; k < strlen_P(mensagem); k++)
+    {
+        mensagemAux =  pgm_read_byte_near(mensagem + k);
+        Serial.print(mensagemAux);
+    }
+\end{lstlisting}
+\end{tcolorbox}
+    
+Ao utilizar o \textbf{\textsf{Monitor Serial}} como debugger ou uma interface de numerosas mensagens, estamos propícios a, facilmente, consumir muita memória RAM durante as chamadas funções de impressão como:
+\begin{lstlisting}[style=c]
+    Serial.print("ESTE LIVRO EH UMA INTRODUCAO AO IOT"); 
+\end{lstlisting}
+Nestas chamadas, todas os dados são armazenados, por padrão, na RAM do dispositivo. Para contornar isso, podemos modificá-las adicionando a macro \emph{F()}, que altera este armazenamento para a flash:
+\begin{lstlisting}[style=c] 
+    Serial.print(F("ESTE LIVRO EH UMA INTRODUCAO AO IOT")); 
+\end{lstlisting}
+    
+                                    
+\begin{tcolorbox}[colbacktitle=yellow!60!white,
+    title={\vspace{-13pt}\includegraphics[scale=0.03]{images/exclamacao.png} \hspace{2pt} \textsf{\textbf{ATENÇÃO!}\vspace{2pt}}},coltitle=black, colback=white,arc=4mm, outer arc=3.5mm]
+    \raggedright
+     Todas as variáveis devem ser definidas globalmente ou definidas como estáticas, \textbf{\textsf{caso contrário}} o \textsf{\textbf{PROGMEM}} não funcionará.
+\end{tcolorbox}
+                                    
+
 
 
 \subsection{JSON}
@@ -1287,7 +1536,7 @@ Os controladores são chamados nas rotas da seguinte forma:
 
 Este exemplo direcionará, pelo namespace padrão, a aplicação quando receber a rota para execução do método \textbf{index()} no arquivo \textit{app/Http/Controller/HomeController.php}.
 
-\subsection{Socket.io}
+\chapter{Socket.io}
 
 % ----------------------------------------------------------
 % PARTE - preparação da pesquisa
