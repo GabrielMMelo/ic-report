@@ -518,6 +518,9 @@ Seguir pontos do curso
 \section{Linux}
 
 \section{Web server}
+
+
+
 \chapter{Laravel}
 \section{Introdução}
 O Laravel é um framework web PHP, baseado na arquitetura MVC, que busca agilizar e
@@ -810,18 +813,246 @@ As tags em Blade são prefixadas com a diretiva @. Suas estruturas de controle t
 
 \subsubsection{Condicionais}
 \begin{itemize}
-    \item \textbf{@if,@endif} \\
-        Compilado para:
+    \item \textbf{@if, @endif} \\
+        Transcrito para:
 
 \begin{lstlisting}[style=common,caption={Correspondente ao @if em PHP puro}]
     <?php if(%*\textbf{\$condicao}*)): ?>
 \end{lstlisting}
 
     O mesmo serve para \textbf{@else} e \textbf{@elseif}.
+
+    \item \textbf{@unless, @endunless} \\
+
+        É o mesmo que:
+
+\begin{lstlisting}[style=common,caption={Variação do @if}]
+    @if (!%*\textbf{\$variavel}*))
+\end{lstlisting}
+
+    \item \textbf{or} \\
+        Helper que substitui o \textit{isset()}. Confere se a variável foi declarada \textbf{ou} retorna um valor padrão definido. Como, por exemplo:
+
+\begin{lstlisting}[style=common,caption={Correspondente ao \textit{isset()} em PHP puro}]
+    {{ %*\textbf{\$variavel}*) or "default" }}
+\end{lstlisting}
+
 \end{itemize}
 
-\subsection{Socket.io}
+\subsubsection{Repetições}
+\begin{itemize}
+    \item \textbf{@for, @endfor} \\
+        \textbf{For} tradicional.
 
+    \item \textbf{@foreach, @endforeach} \\
+        \textbf{For} iterando sobre itens/objetos.
+
+    \item \textbf{@forelse, @endforelse} \\
+        \textbf{For} com um \textit{fallback} adicional quando o objeto de iteração se "esvaziar".
+\end{itemize}
+
+\subsubsection{Herança}
+O Laravel possui diretivas que definem seções que podem ser estendidas e reutilizadas por templates-filhos:
+\begin{itemize}
+    \item \textbf{@yield} \\
+       Define uma seção com nome específico. Pode ter um valor default, caso a seção não seka estendida. O primeiro parâmetro de uma seção é sempre seu nome. Veja os exemplos: 
+
+\begin{lstlisting}[style=common,caption={Valor default usando \textit{@yield}}]
+    <title> @yield('titulo', 'Meu titulo') </title>
+\end{lstlisting}
+
+Neste caso, a tag <title> conterá \textit{'Meu titulo'} caso o template-pai não seja estendido, ou conterá o valor atribuído à seção \textit{'titulo'} no template que o estender.
+
+Observe outra situação:
+\begin{lstlisting}[style=common,caption={\textit{@yield} sem valor default}]
+    <p> @yield('conteudo') </p>
+\end{lstlisting}
+
+Já neste caso, a tag <p> só conterá valores caso seja estendida.
+
+Podemos controlar se uma seção possui uma sobrescrita (ou pegar seu valor) de um template-filho através de:
+
+\begin{lstlisting}[style=common,caption={Controlando sobrescrita}]
+    @if (trim($__env->yieldContent('conteudo')))
+\end{lstlisting}
+
+    \item \textbf{@section, @show}
+        Seção do template-pai que pode definir um bloco inteiro como fallback padrão. Seu conteúdo pode ser sobrescrito por templates-filhos (como no caso da diretiva
+        \textbf{@yield} ), mas também pode ser disponível pela diretiva @parent nos filhos.
+
+        Nos filhos as seções são iniciadas também por \textbf{@section} , porém são finalizadas por \textbf{@endsection}.
+
+    \item \textbf{@include}
+        Seção que permite abrir uma view a partir de outra. É possivel passar dados de maneira explícita, através do segundo parâmetro da diretiva \textbf{@include}, mas também podemos referenciar variáveis do arquivo
+        que incluiu essa view.
+
+        Veja os exemplos:
+
+\begin{lstlisting}[style=common,caption={Passagem de parâmetro por @include}]
+    @include ('botao-login', ['texto' => 'Faça seu login'])
+\end{lstlisting}
+
+Neste caso, a diretiva incluirá a view localizada em \textit{resources/views/botao-login.blade.php}, passando a variável \textbf{texto} como parâmetro. Essa views poderia, de uma forma bem simples, ser desta forma:
+
+\begin{lstlisting}[style=common,caption={Correspondente ao \textit{isset()} em PHP puro}]
+    <a class="button"> {{ %*\textbf{\$texto}*) }} </a>
+\end{lstlisting}
+\end{itemize}
+
+\section{Roteamento e Controladores}
+As rotas apontam para determinado código quando receber determinada requisição do
+usuário. Os controladores, vêm como uma forma inteligente de ligar as \textbf{models} com as \textbf{views},
+como vimos na primeira seção deste material, e nos ajudarão muito na construção de
+aplicações enxutas e inteligentes.
+
+\subsection{Rotas}
+Em Laravel, as rotas são definidas em \textit{/routes}. As rotas web, que têm retorno em html, são definidas em \textit{/routes/web.php}.
+
+Um simples exemplo de rota:
+
+\begin{lstlisting}[style=php,caption={\textit{/routes/web.php}}]
+    Route::get('/', function() {
+        return view(layouts.welcome);
+    });
+\end{lstlisting}
+
+Ao receber uma solicitação GET sem nenhum parâmetro, “/”, (e.g. acessar localhost/, supondo
+que seu localhost seja definido na pasta /public da aplicação), a rota chamará a view em
+\textit{resources/views/layouts/welcome.blade.php}.
+
+O mesmo funcionamento ocorre no exemplo abaixo, ao acessar sua aplicação com a URL \textit{/contato}:
+
+\begin{lstlisting}[style=php,caption={\textit{/routes/web.php 2}}]
+    Route::get('/contato', function() {
+        return view(layouts.contato);
+    });
+\end{lstlisting}
+
+A chamada de views diretamente das rotas é uma prática ruim. Veremos, mais adiante, que
+utilizar controllers para chamada das views é uma alternativa melhor e coerente com o padrão
+MVC.
+
+\subsubsection{Verbos de rota}
+
+\begin{itemize}
+    \item \textbf{Route::get(), Route::post()} \\
+
+        Recebe e trata as requisições padrões do protocolo HTTP GET/POST
+
+    \item \textbf{Route::put(), Route::delete(), Route::any(), Route::match()} \\
+
+        Recebe e trata demais requisições HTTP, geralmente usadas em APIs REST.
+\end{itemize}
+
+\subsubsection{Parâmetros de rotas}
+
+Rotas que tiverem segmento(s) da estrutura URL variável(is) podem ser acessadas por:
+
+\begin{lstlisting}[style=php,caption={\textit{/routes/web.php 3}}]
+    Route::get('/post/{id}', function(%*\textbf{\$id}*)) {
+        // alguma coisa aqui
+    });
+\end{lstlisting}
+
+Desta forma, a closure receberá comom parâmetro o próprio valor de id na variável \textbf{\$id}.
+
+Note que os parâmetros da closure e os segmentos da URL não devem possuir a mesma nomenclatura. A relação entre eles é dada pela ordem em que são dispostos. 
+
+\subsubsection{Restrições com regexp}
+
+Podemos restringir os parâmetros aceitos por uma rota utilizando expressões regulares (regexes), como no exemplo abaixo:
+
+\begin{lstlisting}[style=php,caption={\textit{/routes/web.php 4}}]
+    Route::get('/post/{id}', function(%*\textbf{\$id}*)) {
+        // alguma coisa aqui
+    })->where('id', '[0-9]+');
+\end{lstlisting}
+
+\subsubsection{Nome de rotas}
+
+Podemos definir nome às nossas rotas de forma a acessá-las internamente em nossa aplicação de forma mais fácil.
+
+\begin{lstlisting}[style=php,caption={\textit{/routes/web.php 5}}]
+    Route::get('/', function() {
+        // alguma coisa aqui
+    })->name('welcome');
+\end{lstlisting}
+
+\subsubsection{Helper \textit{route()}}
+
+Podemos, então, utilizar o helper \textit{route()} para referenciar uma rota utilizando seu nome.
+
+\begin{lstlisting}[style=php,caption={Helper \textit{route()}}]
+    <a href="{{ route('welcome') }}">
+\end{lstlisting}
+
+\subsubsection{Helper \textit{url()}}
+
+De forma alternativa, podemos utilizar o helper \textit{url()} para referenciar uma rota sem fazê-la explicitamente ou usando um nome.
+
+\begin{lstlisting}[style=php,caption={Helper \textit{url()}}]
+    <a href="{{ url('/') }}">
+\end{lstlisting}
+
+\subsubsection{Grupos de rotas}
+Podemos agrupar algumas rotas que compatilhem alguma característica, como
+mesmo prefixo, requisitos de autenticação e namespaces de controladores.
+\paragraph{Middleware}
+Camada usada, dentre alguns objetivos, para autenticar usuários e impedir acesso
+de usuários não autorizados em determinadas partes da aplicação. Por exemplo:
+
+\begin{lstlisting}[style=php,caption={Grupo de middleware}]
+    Route::group([‘middleware’ => ‘auth’], function()
+    {
+        Route::get(‘member’, function() {
+            Return view(‘layout.member’);
+        });
+
+        Route::get(‘admin’, function() {
+            Return view(‘layout.admin’);
+        });
+    });
+\end{lstlisting}
+
+Nesta situação, o usuário só receberá a view esperada - member ou admin - caso seja autenticado no sistema.
+
+
+\paragraph{Prefixos de caminho}
+
+Para simplificar a estruturação e legibilidade do código, podemos usar o agrupamento por prefixos de caminho, como exemplificados abaixo:
+
+\begin{lstlisting}[style=php,caption={Prefixos de caminho}]
+    Route::group([‘prefix’ => ‘post’], function() {
+        Route::get(‘/’, function() {
+            Return view(‘layout.posts’);
+        });
+        Route::get(‘/{id}’, function($id) {
+            Return view(‘layout.postId’) ->with(‘id’, $id);
+        });
+    });
+\end{lstlisting}
+
+\subsubsection{Chamando views com parâmetros}
+
+Ainda utilizando o exemplo acima, podemos notar que utilizamos o método adicional \textit{with()}. Esse método injeta variáveis às views.
+
+\subsection{Controladores}
+
+Os controladores residem, por padrão, em \textit{app/Http/Controller}. Para criar um novo controler, utilizamos, mais uma vez, o Artisan:
+
+\begin{lstlisting}[style=bash,caption={Criando um controller}]
+    php artisan make:Controller nome_controller
+\end{lstlisting}
+
+Os controladores são chamados nas rotas da seguinte forma:
+
+\begin{lstlisting}[style=php,caption={Prefixos de caminho}]
+    Route::get(‘/home’, 'HomeController@index')->name('home'); 
+\end{lstlisting}
+
+Este exemplo direcionará, pelo namespace padrão, a aplicação quando receber a rota para execução do método \textbf{index()} no arquivo \textit{app/Http/Controller/HomeController.php}.
+
+\subsection{Socket.io}
 
 % ----------------------------------------------------------
 % PARTE - preparação da pesquisa
