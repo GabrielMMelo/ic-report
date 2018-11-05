@@ -446,20 +446,27 @@ Graduação em Ciência da Computação}
 % inserir lista de abreviaturas e siglas
 % ---
 \begin{siglas}
-\item[ABNT] Associação Brasileira de Normas Técnicas
-\item[abnTeX] ABsurdas Normas para TeX
+\item[IoT] \textit{Internet of Things}
+\item[VCS] \textit{Version control system}
+\item[OS] \textit{Operational system}
+\item[RPI] \textit{Raspberry pi}
+\item[HTTP] \textit{Hypertext transfer protocol}
+\item[PC] \textit{Personal computer}
+\item[JSON] \textit{Javascript object notation}
+\item[IR] \textit{Infrared}
+
 \end{siglas}
 % ---
 
 % ---
 % inserir lista de símbolos
 % ---
-\begin{simbolos}
-\item[$ \Gamma $] Letra grega Gama
-\item[$ \Lambda $] Lambda
-\item[$ \zeta $] Letra grega minúscula zeta
-\item[$ \in $] Pertence
-\end{simbolos}
+%\begin{simbolos}
+%\item[$ \Gamma $] Letra grega Gama
+%\item[$ \Lambda $] Lambda
+%\item[$ \zeta $] Letra grega minúscula zeta
+%\item[$ \in $] Pertence
+%\end{simbolos}
 % ---
 
 % ---
@@ -492,11 +499,11 @@ A documentação assume um teor didático, de forma a introduzir novos
 orientados ao projeto e que estes, por sua vez, incrementarão o mesmo, 
 construindo uma sólida referência do projeto.
 
+Na primeira parte do documento, \textbf{Projeto}, serão abordados os objetivos e ideias iniciais do projeto.
+
 O \textbf{referencial teórico} possui um capítulo no estilo \textit{getting started} para cada uma das tecnologias utilizadas. Neste momento, são abordados pontos sobre preparação do ambiente, funcionalidades e exemplos.
 
 Em \textbf{desenvolvimento}, será apresentado o projeto em si. A arquitetura do projeto, bem como os principais trechos de código serão exaltados. 
-
-Os \textbf{resultados} é descrito os valores qualiquantitativos obtidos com o projeto.
 
 E por fim, são sugeridos \textbf{trabalhos futuros} que servirão como incremento, otimização e correção de componentes atuais.
 
@@ -509,6 +516,12 @@ Este documento foi redigido em \LaTeX usando o pacote \textit{abnTeX2}.
 % ----------------------------------------------------------
 \part{Projeto}
 
+\section{Objetivo}
+O objetivo do projeto é o desenvolvimento de uma plataforma de controle em \textit{IoT} que se posicionasse como uma alternativa de custo mais acessível do que as soluções disponíveis atualmente no mercado. A projeto deve fornecer acesso remoto e seguro à aplicação, sem impactar negativamente na experiência do usuário, uma vez que o sistema deve ser de fácil acesso e manipulação.
+
+Outro ponto pertinente diz respeito a escalabilidade da solução, sendo possível controlar vários dispositivos pelo mesmo sistema.
+
+A autonomia energética do circuito tem significativo peso no desenvolvimento e é quisto que haja uma recarga suficiente da fonte de alimentação (bateria), preferencialmente, por uma energia limpa, como a solar.
 % ----------------------------------------------------------
 % PARTE - preparação da pesquisa
 % ----------------------------------------------------------
@@ -1013,17 +1026,103 @@ Nestas chamadas, todas os dados são armazenados, por padrão, na RAM do disposi
 \end{tcolorbox}
                                     
 
-
-
-\subsection{JSON}
-
 \chapter{Raspberry pi 3}
+O Raspberry pi é um microcomputador que fornece funcionalidades completas de um PC através da conexão de periféricos de entrada/saída, tais como monitores, teclados, mouses, microfones, etc.
+
+Os modelos Raspberry pi causaram grande impacto, principalmente na comunidade  maker de sistemas embarcados, devido ao seu baixo consumo energético, quando comparado a um PC de mesa ou notebook, e também por sua portabilidade, devido às suas dimensões reduzidas. A aplicabilidade de microcomputadores em projetos IoT é praticamente infinita e representa uma evolução no sentido de processamento, comparado aos microcontroladores utilizados até então.
+
+A comunidade raspberry cresceu abruptamente desde seu lançamento e existem os mais diversos tutoriais disponibilizados, gratuitamente, na Internet. 
+
+\subsection{Uso no projeto}
+O modelo Raspberry pi 3 foi utilizado no projeto devido ao seu processamento superior aos demais microcomputadores disponíveis pela mesma faixa de preço, até a data de aquisição\footnote{Julho de 2017}. O dispositivo será utilizado como um \textbf{Web server}, recebendo e tratando requisições de um (ou mais) clientes e se comunicando de forma assíncrona com alguns ESP8266, via Internet. Como sistema operacional, optamos pela utilização do \href{https://www.raspberrypi.org/downloads/raspbian/}{Raspbian}, uma distribuição Linux disponibilizada pela Raspberry Pi e otimizada para processadores ARM.
+
+Como veremos na parte de \textbf{Trabalhos futuros}, é sugerida a alteração do microcomputador pela contratação de uma máquina distribuída.
 
 \section{Linux}
+\textbf{Linux}, ou GNU/Linux, é o termo utilizado para a referência ao sistema operacional (OS) que utiliza o Kernel Linux. O projeto Linux possui código aberto é sua utilização, bem como o estudo, modificação e distribuição é livre sob a licença GPL (versão 2). O código-fonte do kernel linux pode ser acessado neste \href{https://github.com/torvalds/linux}{repositório}.
 
-\section{Web server}
+As distribuições Linux são, em sua maioria, focadas no uso do terminal de comando e na liberdade do usuário em personalizar (com acesso mais baixo nível) as características e comportamento de sua máquina.
+
+Pelo tamanho em disco da imagem do SO e, também, pela quantidade de memória principal (RAM) necessária para, respectivamente, armazenamento e execução de um sistema Linux serem consideravelmente inferiores aos sistemas Windows, o primeiro é amplamente utilizado em sistemas embarcados.
 
 
+
+\section{Git}
+O git é o sistema gerenciador de versão (VCS) de software mais utilizado no mundo, tanto por pessoas físicas (estudantes, profissionais autônomos e entusiastas), quanto pessoas jurídicas.
+
+Um VCS é indispensável na produção de software pela segurança e organização provida. Conforme o código-fonte vai aumentando, novas funcionalidades vão sendo inseridas e, desta forma, a 
+integridade do projeto é um desafio maior. O Git armazena cópias do estado do projeto (commits) em determinado tempo do desenvolvimento, possibilitando o rollback (retrocesso) do 
+software para um estado quisto e seguro.
+
+\subsection{Uso no projeto}
+O projeto foi construído, desde o início, utilizando o git como controlador de versão. Todos os códigos gerados podem ser visualizados neste \href{https://github.com/GabrielMMelo/iot\_server}{repositório}.
+\subsection{Instalação}
+
+\subsubsection{Linux}
+As distribuições Linux atuais já contam com o git instalado, portanto não é necessária nenhuma instalação adicional.
+
+Caso você precise instalar o git em uma máquina que não o possua, o faça pelo repositório padrão (em distribuições derivadas do Debian):
+        \begin{lstlisting}[style=bash]
+            apt-get install git 
+        \end{lstlisting}
+
+
+\subsubsection{Windows}
+A estratégia mais adotada para utilização do git em um ambiente Windows, é a instalação do \href{https://gitforwindows.org/}{Git bash}. 
+
+\subsection{Principais comandos básicos}
+
+\begin{itemize}
+    \item Criação de um repositório. 
+        \begin{lstlisting}[style=bash]
+            git init
+        \end{lstlisting}
+    
+    \item Listagem do estado do repositório. 
+        \begin{lstlisting}[style=bash]
+            git status
+        \end{lstlisting}
+        
+    \item Adição do arquivo \textit{file1.txt} ao repositório. 
+        \begin{lstlisting}[style=bash]
+            git add file1.txt
+        \end{lstlisting}
+        
+    \item Commit dos arquivos adicionados no repositório. 
+        \begin{lstlisting}[style=bash]
+            git commit
+        \end{lstlisting}
+        
+    \item Listagem dos commits. 
+        \begin{lstlisting}[style=bash]
+            git log
+        \end{lstlisting}
+    
+\end{itemize}
+\section{Github}
+O Github é uma plataforma online que disponibiliza repositórios remotos baseados em Git para exposição de projetos e desenvolvimento de software em equipe. 
+
+\subsection{Integração de repositórios locais e remotos}
+Após criar o repositório remoto no github, faça a linkagem do mesmo em seu repositório local com o comando:
+
+        \begin{lstlisting}[style=bash]
+            git remote add origin https://github.com/SEUUSUÁRIO/NOMEDOREPOSITORIO.git
+        \end{lstlisting}
+
+\subsection{Principais comandos básicos}
+
+
+\begin{itemize}
+    \item Envio do repositório local para repositório remoto. 
+        \begin{lstlisting}[style=bash]
+            git push origin master
+        \end{lstlisting}
+        
+    \item Envio do repositório remoto para repositório local. 
+        \begin{lstlisting}[style=bash]
+            git pull origin master
+        \end{lstlisting}
+\end{itemize}
 
 \chapter{Laravel}
 \section{Introdução}
@@ -1558,38 +1657,135 @@ Este exemplo direcionará, pelo namespace padrão, a aplicação quando receber 
 
 \chapter{Socket.io}
 
+\textbf{Socket.io} é uma aplicação que roda em Node.js e possibilita uma solução simples para comunicação assíncrona de servidores para clientes. Desta forma, é possível que um servidor realize uma ação para o usuário quando estourar um evento server-side. 
+
+\section{Uso no projeto}
+A utilização do Socket.io se deu da necessidade de que o web server (Raspberry pi 3) atualizasse, em tempo real, ao usuário o estado (ligado/desligado) dos periféricos controlados. Isso ficará mais claro na parte \textbf{Desenvolvimento}.
+
+\section{Exemplo}
+O próprio \href{https://socket.io/get-started}{website} do projeto disponibiliza um passo-a-passo para iniciantes. Existe também um \href{https://github.com/socketio/chat-example.git}{repositório} que contém um projeto de chat básico que ilustra bem a utilização do Socket.io.
+
 % ----------------------------------------------------------
 % PARTE - preparação da pesquisa
 % ----------------------------------------------------------
 \part{Desenvolvimento}
-\chapter{Circuito}
+\chapter{Arquitetura}
 \begin{figure}[ht!]
-    \includegraphics[width=450pt]{images/circuit.png}
-    \caption{Esquemático do circuito}
+    \includegraphics[width=450pt]{images/architeture.png}
+    \caption{Arquitetura do projeto}
 \end{figure}
 
-\section{Alimentação}
-\subsection{Regulação}
-\section{MCU}
-\section{Placas fotovoltaicas}
+A arquitetura do projeto pode ser dividida em 3 camadas. O código-fonte dos arquivos citados neste capítulo se encontram no \href{https://github.com/GabrielMMelo/iot\_server}{repositório} do projeto e estão devidamente comentados de forma a completarem  as explicações aqui expostas.
+
+\section{Camada 1}
+Esta camada contempla os clientes que consumirão o serviço, via Internet. Qualquer dispositivo que emita requisições HTTP pode ser considerado um cliente válido (PCs, smartphones, tablets).
+
+Existe uma camada de autenticação de forma a melhorar a segurança do projeto e restringir seu acesso. Ao acessar o sistema, uma tela de login solicita os dados de autenticação.
+
+As rotas podem ser acessadas no arquivo \textit{iot\_server/routes/web.php}, disponível no repositório do projeto.
+
+\section{Camada 2}
+É na segunda camada que o \textbf{webserver} é implementado no Raspberry pi. Ele recebe às requisições HTTP advindas dos clientes, as roteia devidamente e retorna a view correta para o usuário. Também no microcomputador são mais dois serviços: um caching com \textbf{Redis} e um server \textbf{Socket.io}. O Redis é utilizado para capturar eventos disparados pelo Laravel. Esse nível se comunica com de baixo através do servidor Socket.io, por mensagens em broadcasting.
+
+A configuração do Redis é feita no arquivo \textit{iot\_server/.env} e depende de informações particulares da maquina. O evento de clique no botão da Dashboard está implementado no arquivo \textit{iot\_server/app/Events/Button.php}, disponível no repositório do projeto.
+
+O arquivo onde é realizada a inscrição no canal do server Redis e a criação do servidor e emissão de dados pelo Socket.io é o \textit{iot\_server/Socket.js}. 
+
+
+
+\section{Camada 3}
+A última camada suporta os denominados \textbf{nós}. Cada nó é composto por um ESP8266 e, pelo menos, um periférico conectado. Os nós se inscrevem em um canal específico do servidor Socket.io, por onde a Raspberry enviará o broadcasting. As mensagens enviadas são objeto JSON e contém um identificador que indica qual nó é o real destinatário. Os nós que não são o destino da mensagem, simplesmente a ignora.
+O restante da mensagem indica um valor de estado (ligado, desligado ou alguma outra ação) para o microcontrolador escrever em seus periféricos.
+
+Quando houver alteração do estado de um periférico (seja por sinal do microcontrolador ou por alguma alteração externa) é enviado no mesmo canal subscrito do Socket.io, uma mensagem contendo as informações de alteração que serão capturadas por um módulo javascript (\textit{Socket.io.js}) rodando em cada um dos clientes. Desta forma, os estados dos periféricos são atualizados em tempo real para os usuários.
+
+O código principal (que contém a função \textit{loop()}) executado pelos ESP8266 está em \textit{iot\_server/esp8266/socket.io/socket.io.ino}.
+
+A view enviada para o cliente pelo Raspberry pi e que executa o módulo \textit{Socket.io.js} está em \textit{iot\_server/resources/views/dashboard.blade.php}.
+
+\chapter{Nós}
+No projeto, cada nó é constituido de um circuito com o ESP8266 e um (ou mais) periféricos de saída. Os periféricos de saída podem ser: luzes (lámpadas pisca-pisca), Tvs e dispositivos gerais de comportamento binário (ligado/desligado).
+
+Para cada tipo de periférico, foi desenvolvido um tipo de nó. Ao todo são implementados 3 nós, com circuitos distintos, porém com softwares idênticos.
+
+\section{Nó \textit{light}}
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=350pt]{images/light.jpeg}
+    \caption{Nó \textit{light}}
+\end{figure}
+Foi o primeiro nó desenvolvido e dimensionado para um periférico específico: dois conjuntos de lâmpadas pisca-pisca (como as usadas no natal); cada um com 4 sequências paralelas de 3 LEDs cada. O software de acionamento reconhece apenas dois comandos: 1 (para ligar) e 0 (para desligar). Quando ligado, o ESP8266 piscará os conjuntos de LEDS de forma alternada em um período de 500ms.
+\subsection{Circuito}
+\begin{figure}[ht!]
+    \includegraphics[width=450pt]{images/circuit.png}
+    \caption{Esquemático do circuito de um nó \textit{light}}
+\end{figure}
+
+\subsection{Alimentação}
+Para alimentação do circuito, foi construído um pack de baterias para adequar à tensão necessária para ativação das lâmpadas e corrente suficiente para garantir uma autonomia de 0 dias. O pack possui 4 pilhas (2 em paralelo - 2 em série). Cada pilha possui 4.2V e 6800mAh. A Figura 5 ilustra o pack.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=250pt]{images/pack.jpeg}
+    \caption{Pack de baterias}
+\end{figure}
+\subsubsection{Regulação}
+A adequação da tensão para alimentação do ESP8266 foi obtida com um regulador de tensão \textit{ams11173V3}. A Figura 6 ilustra o regulador.
+
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=250pt]{images/ams1117.jpg}
+    \caption{Regulador de tensão ams11173V3}
+\end{figure}
+
+\section{Nó \textit{Tv}}
+
+O nó \textit{Tv} foi projetado para controlar uma tv remotamente, funcionando como um tradicional controle remoto. O periférico de saída também é específico e simples: um LED emissor infravermelho (IR). O software de acionamento do nó reconhece os seguintes botões mapeados de um controle remote da marca SAMSUNG (funciona para qualquer tv da marca):
+\begin{itemize}
+    \item \textit{\textbf{power}}: liga/desliga a tv;
+    \item \textit{\textbf{source}}: altera a fonte de dados da tv;
+    \item \textit{\textbf{vol+ e vol-}}: aumenta/diminui o volume da tv; 
+    \item \textit{\textbf{ch+ e ch-}}: avança/retrocede o canal atual da tv;
+    \item \textit{\textbf{direcionais}}: movimenta o seletor da tv para as quadro direções cardinais e
+    \item \textit{\textbf{enter}}: seleciona/confirma.
+\end{itemize}
+
+\subsection{Circuito}
+O Circuito mais simples que o do nó anterior e possui apenas uma alimentação adequada para o ESP8266 e um LED emissor infravermelho ligado a um pino digital do microcontrolador.
+
+\section{Nó \textit{node}}
+Por último, o nó \textit{node} não possui um periférico de saída definido. Quaisquer dispositivos que tenham comportamento digital, podem ser adicionados no circuito. É um nó versátil de utilização genérica.
+
+\section{Criação de nós pela plataforma}
+A implementação ainda não permite que o usuário crie seus próprios módulos diretamente no sistema web, porém foi desenvolvido um comando no \textit{Artisan} no Laravel para fazê-los: o \textsf{make:module}.
+
+\subsection{make:module}
+Através do comando \textsf{make:module} é possível criar nós, incluindo-os automaticamente no sistema web. Para executá-lo, basta estar no diretório root do projeto e executá-lo pelo artisan. A sintaxe é a seguinte:
+
+\begin{lstlisting}[style=bash,caption={Executando comando \textsf{make:module}}]
+    php artisan make:module {type} {id?} {local?} {owner?} {--d} {--M} {--C} {--D}
+\end{lstlisting}
+
+Apresentando cada um dos argumentos:
+
+\begin{itemize}
+    \item \textbf{type}: Tipo do nó (node ou tv). \textit{Light} e \textit{node} são considerados o mesmo tipo aqui;
+    \item \textbf{id (opcional)}: O número identificador do ESP. É setado em \textit{iot\_server/esp8266/socket.io/config.h};
+    \item \textbf{local (opcional)}: Nome do cômodo onde o nó estará;
+    \item \textbf{owner (opcional)}: Nome do dono do nó;
+    \item \textbf{flag -\-d}: Define o nó como sendo \textit{light};
+    \item \textbf{flag -\-M}: Define o modelo da Tv. Aceitos: SAMSUNG ou LG;
+    \item \textbf{flag -\-C}: Define o contador do nó (define a ordem de exposição no sistema web);
+    \item \textbf{flag -\-D}: Deleta um módulo pelo número do contador (--C).
+\end{itemize}
+
+A implementação do comando pode ser encontrada no repositório do projeto em \textit{iot\_server/app/Console/Commands/makeModule.php}.
 
 % ----------------------------------------------------------
 % Parte de resultados
 % ----------------------------------------------------------
-\part{Resultados}
-
-% ---
-% Capitulo de revisão de literatura
-% ---
-\chapter{Lorem ipsum dolor sit amet}
-
-% ---
-\section{Aliquam vestibulum fringilla lorem}
-% ---
-
-\lipsum[1]
-
-\lipsum[2-3]
+%\part{Resultados}
 
 % ---
 % Finaliza a parte no bookmark do PDF
@@ -1602,24 +1798,40 @@ Este exemplo direcionará, pelo namespace padrão, a aplicação quando receber 
 % Trabalhos futuros
 % ----------------------------------------------------------
 \part{Trabalhos futuros}
+
 \chapter{Circuito}
+\section{ESP8266}
+O modelo do ESP8266 utilizado é ESP-01, o pioneiro da série. Apesar de estável, ele possui menos pinos digitais e menos memória flash e RAM. A sugestão é a utilização do ESP-12X, que possui características físicas vantajosas e preço comparável ao modelo já utilizado.  
+
+\section{PCB}
+Outra sugestão é o desenho e confecção de uma pcd, utilizando impressão das trilhas na placa de fenolite. A placa atual foi, manualmente, soldada em uma placa de fenolite furada e, por isso, seu aspecto é grosseiro. O desenho do layout, com disposição otimizada das trilhas auxiliará na montagem do circuito.
 
 \section{Alimentação}
-\subsection{Células fotovoltaicas}
+Como fonte de recarga da bateria foi pensado o uso de \textbf{células fotovoltaicas} no circuito, porém o prazo para aquisição das células não foi suficiente.
 
 \section{Raspberry pi 3}
-\subsection{Web server}
-Mais leve
+Como uma alternativa ao Raspberry pi, é sugerido o uso de novos microcomputadores significativamente mais baratos, como os modelos da \textit{Orange pi}. 
 
-Raspberry por um host contratado
+\section{Contratação de host}
+Como última etapa do projeto, deve ser levado em consideração a contratação de um DNS, um certificado SSL e um serviço de host para a servir a aplicação, de forma à torná-la mais barata (quando comparada à compra de um Raspberry), tercerizando o processamento e fazendo-a mais acessível.
+
+\chapter{Software}
+
+\section{Nós}
+Deve ser considerada a implementação de novos tipos de nós que englobem periféricos de comportamento analógico.
+
+Outra sugestão é a ampliação dos modelos de Tv suportados pelo projeto.
+
+\section{ESP8266}
+Existem outros firmwares, utilizando outras linguagens, compatíveis com o ESP8266. Um deles é o \href{https://micropython.org/]}{micropython}, que traz como vantagens à versatilidade da linguagem Python e uma maneira interessante de modularização do código. Outro aspecto relevante deste firmware é o fato da linguagem utilizada ser interpretada, facilitando mudanças e testes em trechos do código rapidamente.
 
 % ---
 % Conclusão
 % ---
-\chapter{Conclusão}
+%\chapter{Conclusão}
 % ---
 
-\lipsum[31-33]
+%\lipsum[31-33]
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
@@ -1646,24 +1858,24 @@ Raspberry por um host contratado
 % ---
 % Inicia os apêndices
 % ---
-\begin{apendicesenv}
+%\begin{apendicesenv}
 
     % Imprime uma página indicando o início dos apêndices
-    \partapendices
+ %   \partapendices
 
     % ----------------------------------------------------------
-    \chapter{Quisque libero justo}
+  %  \chapter{Quisque libero justo}
     % ----------------------------------------------------------
 
-    \lipsum[50]
+   % \lipsum[50]
 
     % ----------------------------------------------------------
-    \chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
-    ac pretium ante justo a nulla curabitur tristique arcu eu metus}
+    %\chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
+    %ac pretium ante justo a nulla curabitur tristique arcu eu metus}
     % ----------------------------------------------------------
-    \lipsum[55-57]
+    %\lipsum[55-57]
 
-\end{apendicesenv}
+%\end{apendicesenv}
 % ---
 
 
@@ -1674,30 +1886,30 @@ Raspberry por um host contratado
 % ---
 % Inicia os anexos
 % ---
-\begin{anexosenv}
+%\begin{anexosenv}
 
     % Imprime uma página indicando o início dos anexos
-    \partanexos
+ %   \partanexos
 
     % ---
-    \chapter{Morbi ultrices rutrum lorem.}
+  %  \chapter{Morbi ultrices rutrum lorem.}
     % ---
-    \lipsum[30]
+   % \lipsum[30]
 
     % ---
-    \chapter{Cras non urna sed feugiat cum sociis natoque penatibus et magnis dis
-    parturient montes nascetur ridiculus mus}
+    %\chapter{Cras non urna sed feugiat cum sociis natoque penatibus et magnis dis
+    %parturient montes nascetur ridiculus mus}
     % ---
 
-    \lipsum[31]
+%    \lipsum[31]
 
     % ---
-    \chapter{Fusce facilisis lacinia dui}
+ %   \chapter{Fusce facilisis lacinia dui}
     % ---
 
-    \lipsum[32]
+  %  \lipsum[32]
 
-\end{anexosenv}
+%\end{anexosenv}
 
 %---------------------------------------------------------------------
 % INDICE REMISSIVO
@@ -1710,51 +1922,51 @@ Raspberry por um host contratado
 %---------------------------------------------------------------------
 % Formulário de Identificação (opcional)
 %---------------------------------------------------------------------
-\chapter*[Formulário de Identificação]{Formulário de Identificação}
-\addcontentsline{toc}{chapter}{Exemplo de Formulário de Identificação}
-\label{formulado-identificacao}
+%\chapter*[Formulário de Identificação]{Formulário de Identificação}
+%\addcontentsline{toc}{chapter}{Exemplo de Formulário de Identificação}
+%\label{formulado-identificacao}
 
-Exemplo de Formulário de Identificação, compatível com o Anexo A (informativo)
-da ABNT NBR 10719:2015. Este formulário não é um anexo. Conforme definido na
-norma, ele é o último elemento pós-textual e opcional do relatório.
+%Exemplo de Formulário de Identificação, compatível com o Anexo A (informativo)
+%da ABNT NBR 10719:2015. Este formulário não é um anexo. Conforme definido na
+%norma, ele é o último elemento pós-textual e opcional do relatório.
 
-\bigskip
+%\bigskip
 
-\begin{tabular}{|p{9cm}|p{5cm}|}
-    \hline
-    \multicolumn{2}{|c|}{\textbf{\large Dados do Relatório Técnico e/ou científico}}\\
-    \hline
-    \multirow{4}{10cm}[24pt]{Título e subtítulo}& Classificação de segurança\\
-                                                & \\
-                                                \cline{2-2}
-                                                & No.\\
-                                                & \\
+%\begin{tabular}{|p{9cm}|p{5cm}|}
+%    \hline
+%    \multicolumn{2}{|c|}{\textbf{\large Dados do Relatório Técnico e/ou %científico}}\\
+%    \hline
+%    \multirow{4}{10cm}[24pt]{Título e subtítulo}& Classificação de segurança\\
+%                                                & \\
+%                                                \cline{2-2}
+%                                                & No.\\
+%                                                & \\
 
-                                                \hline
-    Tipo de relatório & Data\\
-    \hline
-    Título do projeto/programa/plano & No.\\
-    \hline
-    \multicolumn{2}{|l|}{Autor(es)} \\
-    \hline
-    \multicolumn{2}{|l|}{Instituição executora e endereço completo} \\
-    \hline
-    \multicolumn{2}{|l|}{Instituição patrocinadora e endereço completo} \\
-    \hline
-    \multicolumn{2}{|l|}{Resumo}\\[3cm]
-    \hline
-    \multicolumn{2}{|l|}{Palavras-chave/descritores}\\
-    \hline
-    \multicolumn{2}{|l|}{
-    Edição \hfill No. de páginas \hfill No. do volume \hfill Nº de classificação \phantom{XXXX}} \\
-    \hline
-    \multicolumn{2}{|l|}{
-    ISSN \hfill \hfill Tiragem \hfill Preço \phantom{XXXXXXXX}} \\
-    \hline
-    \multicolumn{2}{|l|}{Distribuidor} \\
-    \hline
-    \multicolumn{2}{|l|}{Observações/notas}\\[3cm]
-    \hline
-\end{tabular}
+%                                                \hline
+%    Tipo de relatório & Data\\
+%    \hline
+%    Título do projeto/programa/plano & No.\\
+%    \hline
+%    \multicolumn{2}{|l|}{Autor(es)} \\
+%    \hline
+%    \multicolumn{2}{|l|}{Instituição executora e endereço completo} \\
+%    \hline
+%    \multicolumn{2}{|l|}{Instituição patrocinadora e endereço completo} \\
+%    \hline
+%    \multicolumn{2}{|l|}{Resumo}\\[3cm]
+%    \hline
+%    \multicolumn{2}{|l|}{Palavras-chave/descritores}\\
+%    \hline
+%    \multicolumn{2}{|l|}{
+%    Edição \hfill No. de páginas \hfill No. do volume \hfill Nº de %classificação \phantom{XXXX}} \\
+%    \hline
+%    \multicolumn{2}{|l|}{
+%    ISSN \hfill \hfill Tiragem \hfill Preço \phantom{XXXXXXXX}} \\
+%    \hline
+%    \multicolumn{2}{|l|}{Distribuidor} \\
+%    \hline
+%    \multicolumn{2}{|l|}{Observações/notas}\\[3cm]
+%    \hline
+%\end{tabular}
 
    \end{document}
